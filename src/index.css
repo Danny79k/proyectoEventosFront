@@ -16,6 +16,13 @@ h1{
 } */
 
 
+.text-border {
+  text-shadow:
+      0.5px 0.5px 0px black,   /* sombra abajo derecha */
+      -0.5px 0.5px 0px black,  /* sombra abajo izquierda */
+      0.5px -0.5px 0px black,  /* sombra arriba derecha */
+      -0.5px -0.5px 0px black; /* sombra arriba izquierda */
+}
 
 button {
   border-radius: 8px;
