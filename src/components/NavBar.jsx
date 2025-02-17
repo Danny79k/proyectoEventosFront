@@ -57,14 +57,15 @@ export default function NavBar() {
                             </NavLink>
                         ))}
                         <button
-                            onClick={() => {setLight(!light)
+                            onClick={() => {
+                                setLight(!light)
                                 if (light) {
                                     localStorage.setItem("theme", "light");
                                 } else {
                                     localStorage.setItem("theme", "dark");
                                 }
                             }}
-                            className={`p-2 ${(light)?"bg-blue-200" : "dark:bg-gray-900" } rounded-full shadow-md transition-all duration-300`}
+                            className={`p-2 ${(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
                         >
                             {!light ? <Moon className="text-blue-500" /> : <Sun className="text-yellow-500" />}
                         </button>
@@ -85,11 +86,16 @@ export default function NavBar() {
                             </NavLink>
                         ))}
                         <button
-                            onClick={() => {
-                                setLight(!light);
-                                setIsOpen(false);
+                            className={`p-2 ${(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
+                            onTouchStart={() => {
+                                console.log("ei");
+                                setLight(!light)
+                                if (light) {
+                                    localStorage.setItem("theme", "light");
+                                } else {
+                                    localStorage.setItem("theme", "dark");
+                                }
                             }}
-                            className="p-2 rounded-full shadow-md transition-all duration-300"
                         >
                             {light ? <Moon className="text-blue-500" /> : <Sun className="text-yellow-400" />}
                         </button>
