@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-const cache = {}
+
 
 
 export default function useFetch(url) {
@@ -18,7 +18,6 @@ export default function useFetch(url) {
             })
             if (res.ok) {
                 const data = await res.json()
-                cache[url] = data
                 setData(data)
             } else {
                 throw Error("Error al aceder a la API")

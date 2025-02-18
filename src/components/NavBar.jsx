@@ -2,10 +2,12 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { LightContext } from "../App";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import Login from "../pages/Login";
 
 export default function NavBar() {
     const { light, setLight } = useContext(LightContext)
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenNav, setIsOpenNav] = useState(false);
     const [navBg, setNavBg] = useState("bg-transparent");
 
 
@@ -69,13 +71,26 @@ export default function NavBar() {
                         >
                             {!light ? <Moon className="text-blue-500" /> : <Sun className="text-yellow-500" />}
                         </button>
+                        <button
+                            onClick={() => setIsOpenNav(!isOpenNav)}
+                        >
+                            {isOpenNav ? <X size={30} /> : <Menu size={30} />}
+                        </button>
+                    </div>
+                </div>
+                <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"}`}>
+                    <div className={`flex flex-col p-4 space-y-4 ${navBg}`}>
+                        <NavLink to={"/login"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Login</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Nosotros</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Contacto</NavLink>
                     </div>
                 </div>
 
                 {/* Menú desplegable en móviles */}
                 {isOpen && (
                     <div className="lg:hidden flex flex-col items-center space-y-4 py-4 mt-2 rounded-md shadow-md">
-                        {["", "Asociaciones", "Eventos"].map((item, index) => (
+                        {["", "Asociaciones", "Eventos", "Login"].map((item, index) => (
                             <NavLink
                                 key={index}
                                 to={`/${item.toLowerCase()}`}
@@ -100,7 +115,9 @@ export default function NavBar() {
                             {light ? <Moon className="text-blue-500" /> : <Sun className="text-yellow-400" />}
                         </button>
                     </div>
+
                 )}
+
             </nav>
         </div>
     );
