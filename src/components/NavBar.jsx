@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { LightContext } from "../App";
 import { Menu, X, Sun, Moon } from "lucide-react";
-import Login from "../pages/Login";
+
 
 export default function NavBar() {
     const { light, setLight } = useContext(LightContext)
@@ -13,7 +13,7 @@ export default function NavBar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 200) {
+            if (window.scrollY > 200 || isOpenNav || isOpen) {
                 (localStorage.getItem("theme") === "dark") ?
                     setNavBg("bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg text-white")
                     : setNavBg("bg-amber-50 bg-opacity-80 backdrop-blur-md shadow-lg text-gray-900")
@@ -23,7 +23,7 @@ export default function NavBar() {
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [isOpenNav, isOpen]);
 
     return (
         <div
@@ -72,18 +72,22 @@ export default function NavBar() {
                             {!light ? <Moon className="text-blue-500" /> : <Sun className="text-yellow-500" />}
                         </button>
                         <button
-                            onClick={() => setIsOpenNav(!isOpenNav)}
+                            onClick={() => {
+                                setIsOpenNav(!isOpenNav)
+                            }}
                         >
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
                         </button>
                     </div>
                 </div>
                 <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"}`}>
-                    <div className={`flex flex-col p-4 space-y-4 ${navBg}`}>
-                        <NavLink to={"/login"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Login</NavLink>
-                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
-                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Nosotros</NavLink>
-                        <NavLink to={"#"} className=" hover:text-yellow-500" onClick={() => setIsOpen(false)}>Contacto</NavLink>
+                    <div className={`grid grid-cols-4  p-4 space-y-4 ${navBg}`}>
+                        <NavLink to={"/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
+                        <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Log out</NavLink>
                     </div>
                 </div>
 
@@ -103,7 +107,6 @@ export default function NavBar() {
                         <button
                             className={`p-2 ${(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
                             onTouchStart={() => {
-                                console.log("ei");
                                 setLight(!light)
                                 if (light) {
                                     localStorage.setItem("theme", "light");

@@ -1,14 +1,13 @@
 import useFetch from "../components/useFetch"
 import Loading from "../components/Loading"
-import { LightContext } from "../App"
-import { useContext } from "react"
+import Error from "../components/Error"
+
 export default function Asociaciones() {
 
-    const {light} = useContext(LightContext)
     const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
 
-    if (loading) return (<><Loading /></>)
-    if (error) return (<>ERROR</>)
+    if (loading) return (<div className="mt-20"><Loading /></div>)
+    if (error) return (<div className="mt-20"><Error/></div>)
     const asociations = data.data
     console.log(asociations);
     return (
