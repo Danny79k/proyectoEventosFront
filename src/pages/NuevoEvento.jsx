@@ -1,9 +1,12 @@
 import { useContext, useState } from "react";
 import { LightContext } from "../App";
+import Swal from "sweetalert2";
 
 export default function NuevoEvento() {
 
-    const {light} = useContext(LightContext)
+
+
+    const { light } = useContext(LightContext)
 
     const [formData, setFormData] = useState({
         title: "",
@@ -23,6 +26,8 @@ export default function NuevoEvento() {
         "Festival",
     ];
 
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -31,6 +36,11 @@ export default function NuevoEvento() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData);
+        Swal.fire({
+            title: "Evento creado",
+            icon: "success",
+            draggable: true
+        });
     };
 
     return (
@@ -46,7 +56,6 @@ export default function NuevoEvento() {
                         value={formData.title}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
-                        required
                     />
                 </div>
 
@@ -59,7 +68,7 @@ export default function NuevoEvento() {
                         value={formData.date_start}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
-                        required
+
                     />
                 </div>
 
@@ -72,7 +81,7 @@ export default function NuevoEvento() {
                         value={formData.date_end}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
-                        required
+
                     />
                 </div>
 
@@ -85,7 +94,7 @@ export default function NuevoEvento() {
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         rows="4"
-                        required
+
                     />
                 </div>
 
@@ -96,7 +105,7 @@ export default function NuevoEvento() {
                         name="accessType"
                         value={formData.accessType}
                         onChange={handleChange}
-                        className={`w-full p-2 border rounded-lg ${(!light)? "bg-amber-50":"bg-gray-900"}`}
+                        className={`w-full p-2 border rounded-lg ${(!light) ? "bg-amber-50" : "bg-gray-900"}`}
                     >
                         <option value="publico">Público</option>
                         <option value="anticipado">Anticipado</option>
@@ -111,8 +120,7 @@ export default function NuevoEvento() {
                         name="eventType"
                         value={formData.eventType}
                         onChange={handleChange}
-                        className={`w-full p-2 border rounded-lg ${(!light)? "bg-amber-50":"bg-gray-900"}`}
-                        required
+                        className={`w-full p-2 border rounded-lg ${(!light) ? "bg-amber-50" : "bg-gray-900"}`}
                     >
                         <option value="">Selecciona un tipo</option>
                         {eventTypes.map((type) => (

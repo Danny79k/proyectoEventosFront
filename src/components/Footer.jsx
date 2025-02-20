@@ -32,7 +32,7 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <p className='text-center pt-10 text-gray-400'><strong><a href="https://github.com/Danny79k/EldenRingAPI">Asociaciones ©</a></strong> 2025 by <strong><a href="https://github.com/Danny79k" target="_blank">Peruano McPaloma</a></strong> is licensed under CC BY-NC-SA 4.0 </p>
+            <p className='text-center pt-10 text-gray-400'><strong><a href="https://github.com/Danny79k/EldenRingAPI">Asociaciones ©</a></strong> 2025 by <strong><a href="https://github.com/Danny79k/proyectoeventosfront" target="_blank">Jeffrey Arrosio & Danny Belloli</a></strong> is licensed under CC BY-NC-SA 4.0 </p>
             <div className='flex justify-center items-center pt-5'>
                 <a href="https://w3.org/WAI/WCAG2AA-Conformance"><img src="https://sda.correos.es/images/wcag2AA-blue.png" height='40' width='80' alt="wcag2AA" aria-label='wcag22AA' /></a>
             </div>

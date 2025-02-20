@@ -6,6 +6,7 @@ import Eventos from './pages/Eventos'
 import Login from './pages/Login'
 import Asociaciones from './pages/Asociaciones'
 import NuevoEvento from './pages/NuevoEvento'
+import NuevoAsociacion from './pages/NuevaAsociacion'
 import useFetchAuth from './components/useFetchAuth'
 import Loading from './components/Loading'
 
@@ -34,6 +35,7 @@ function App() {
                 <Route element={<Asociaciones />} path='/asociaciones'></Route>
                 <Route element={<Eventos />} path='/eventos'></Route>
                 <Route element={<NuevoEvento/>} path='/nuevo-evento'></Route>
+                <Route element={<NuevoAsociacion/>} path='/nueva-asociacion'></Route>
               </Route>
             </Routes>
           </LightContext.Provider>
