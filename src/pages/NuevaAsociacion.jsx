@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 
 export default function NuevoAsociacion() {
-    const [formData, setFormData] = useState({
+    const [data, setData] = useState({
         name: "",
         description: "",
         phone: "",
@@ -16,7 +16,7 @@ export default function NuevoAsociacion() {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
+        setData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
@@ -24,6 +24,10 @@ export default function NuevoAsociacion() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const formData = new formData()
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
         console.log("Formulario enviado:", formData);
         Swal.fire({
             title: "Asociación creada",
@@ -35,14 +39,14 @@ export default function NuevoAsociacion() {
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Formulario</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
                 {/* Nombre */}
                 <div>
                     <label className="block font-semibold">Nombre:</label>
                     <input
                         type="text"
                         name="name"
-                        value={formData.name}
+                        value={data.name}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
@@ -54,7 +58,7 @@ export default function NuevoAsociacion() {
                     <label className="block font-semibold">Descripción:</label>
                     <textarea
                         name="description"
-                        value={formData.description}
+                        value={data.description}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         rows="4"
@@ -68,7 +72,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="tel"
                         name="phone"
-                        value={formData.phone}
+                        value={data.phone}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         pattern="[0-9]{10}"
@@ -83,7 +87,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="email"
                         name="email"
-                        value={formData.email}
+                        value={data.email}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
@@ -95,7 +99,7 @@ export default function NuevoAsociacion() {
                     <label className="block font-semibold">Tipo:</label>
                     <select
                         name="type"
-                        value={formData.type}
+                        value={data.type}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
@@ -114,7 +118,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="checkbox"
                         name="maxMembersEnabled"
-                        checked={formData.maxMembersEnabled}
+                        checked={data.maxMembersEnabled}
                         onChange={handleChange}
                         className="mr-2"
                     />
@@ -122,13 +126,13 @@ export default function NuevoAsociacion() {
                 </div>
 
                 {/* Input de número si el checkbox está activo */}
-                {formData.maxMembersEnabled && (
+                {data.maxMembersEnabled && (
                     <div>
                         <label className="block font-semibold">Número máximo de miembros:</label>
                         <input
                             type="number"
                             name="maxMembers"
-                            value={formData.maxMembers}
+                            value={data.maxMembers}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-lg"
                             min="1"

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { LightContext } from "../App";
+import { LightContext } from "../utils/Context";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
 

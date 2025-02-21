@@ -1,6 +1,6 @@
 
 import { useContext } from "react"
-import { LightContext } from "../App"
+import { LightContext } from "../utils/Context"
 export default function Footer() {
 
     const { light } = useContext(LightContext)
