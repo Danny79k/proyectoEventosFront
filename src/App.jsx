@@ -2,22 +2,28 @@ import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './layouts/layout'
 import Index from './pages'
-import Eventos from './pages/Eventos'
 import Login from './pages/Login'
 import Asociaciones from './pages/Asociaciones'
-import NuevoEvento from './pages/NuevoEvento'
+import Asociacion from './pages/Asociacion'
 import NuevoAsociacion from './pages/NuevaAsociacion'
+import Eventos from './pages/Eventos'
+import Evento from './pages/evento'
+import NuevoEvento from './pages/NuevoEvento'
 import NotFound from './pages/NotFound'
-import { LightContext } from './utils/Context'
-import useFetchAuth from './components/useFetchAuth'
-import Loading from './components/Loading'
+import { LightContext, EventContext, AsociationContext } from './utils/Context'
+// import useFetchAuth from './components/useFetchAuth'
+// import Loading from './components/Loading'
 
 
 import './App.css'
 
+
 function App() {
-  console.log(localStorage.getItem("theme"));
+
   const [light, setLight] = useState(localStorage.getItem("theme") || true)
+  const [eventos, setEventos] = useState(null)
+  const [asociaciones, setAsociationes] = useState(null)
+
 
   // const { data, loading, error } = useFetchAuth("https://jeffrey.informaticamajada.es/auth/check")
 
@@ -31,17 +37,23 @@ function App() {
     //   :
     <>
       <LightContext.Provider value={{ light, setLight }}>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route element={<Login />} path='/login'></Route>
-            <Route element={<Index />} path='/'></Route>
-            <Route element={<Asociaciones />} path='/asociaciones'></Route>
-            <Route element={<Eventos />} path='/eventos'></Route>
-            <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
-            <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
-            <Route element={<NotFound />} path='/*'></Route>
-          </Route>
-        </Routes>
+        <EventContext.Provider value={{ eventos, setEventos }}>
+          <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
+            <Routes>
+              <Route path='/' element={<Layout />}>
+                <Route element={<Login />} path='/login'></Route>
+                <Route element={<Index />} path='/'></Route>
+                <Route element={<Asociaciones />} path='/asociaciones'></Route>
+                <Route element={<Asociacion/>} path='/asociacion/:id'></Route>
+                <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
+                <Route element={<Eventos />} path='/eventos'></Route>
+                <Route element={<Evento/>} path='/evento/:id'></Route>
+                <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
+                <Route element={<NotFound />} path='/*'></Route>
+              </Route>
+            </Routes>
+          </AsociationContext.Provider>
+        </EventContext.Provider>
       </LightContext.Provider>
     </>
   )

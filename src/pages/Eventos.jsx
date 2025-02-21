@@ -1,22 +1,45 @@
 import useFetch from "../components/useFetch"
 import Loading from "../components/Loading"
 import Error from "../components/Error"
+import CarruselEvent from "../components/CarruselEvent"
+import { EventContext } from "../utils/Context"
+import { useContext, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Eventos() {
 
+    const { setEventos } = useContext(EventContext)
+    const [eventosLocal, setEventosLocal] = useState([])
     const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/events")
 
+
+    useEffect(() => {
+        if (data) setEventos(data)
+    })
+
+    useEffect(() => {
+        const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
+        setEventosLocal(eventosGuardados)
+    }, [])
+
     if (loading) return (<div className="mt-20"><Loading /></div>)
-    if (error) return (<div className="mt-20"><Error/></div>)
+    if (error) return (<div className="mt-20"><Error /></div>)
     const eventos = data.data
-    console.log(data);
+
+    let ultimosEventos = ""
+
+    if (!eventosLocal.length == 0) {
+        ultimosEventos = <CarruselEvent eventosLocal={eventosLocal}></CarruselEvent>
+    }
 
     return (
         <div className="mt-20">
+            {ultimosEventos}
+            <h1>Todos los eventos</h1>
             <div className="grid grid-cols-3 gap-2">
                 {eventos.map(evento => {
                     return (
-                        <div className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id}>
+                        <Link className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id} to={`/evento/${evento.id}`}>
                             <img className="w-full h-48 object-cover" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"} alt={"name"} />
                             <div className="p-5">
                                 <h2 className="text-2xl font-bold ">{evento.title}</h2>
@@ -26,11 +49,11 @@ export default function Eventos() {
                                         <span>tipo event:</span>{evento.access_type}
                                     </p>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        <span>fecha evento: </span>{evento.date_start.slice(0,10)}
+                                        <span>fecha evento: </span>{evento.date_start.slice(0, 10)}
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     )
                 })}
             </div>
