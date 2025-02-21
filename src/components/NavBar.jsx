@@ -120,8 +120,10 @@ export default function NavBar() {
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Log out</NavLink>
                 </div>
+                    <form method="post" className="bg-red-500" action="https://jeffrey.informaticamajada.es/logout">
+                        <button type="submit" className="bg-red-500 p-1 hover:border-none rounded-2xl">Logout</button>
+                    </form>
             </div>
         </div>
     );
