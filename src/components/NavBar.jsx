@@ -120,7 +120,7 @@ export default function NavBar() {
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Log out</NavLink>
+                    <NavLink to={""} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Log out</NavLink>
                 </div>
             </div>
         </div>
