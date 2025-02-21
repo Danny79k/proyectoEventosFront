@@ -115,13 +115,13 @@ export default function NavBar() {
             </nav>
             <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"} ${navBg} fixed right-100 top-20 z-20`}>
                 <div className={`grid grid-cols-4  p-4 space-y-4 ${navBg}`}>
-                    <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
+                    <NavLink to={"http://localhost/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                     <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
                 </div>
-                    <form method="post" className="bg-red-500" action="https://jeffrey.informaticamajada.es/logout">
+                    <form method="get" className="bg-red-500" action="http://localhost/logout-user">
                         <button type="submit" className="bg-red-500 p-1 hover:border-none rounded-2xl">Logout</button>
                     </form>
             </div>
