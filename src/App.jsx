@@ -21,7 +21,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost/auth/user', {
+    fetch('https://jeffrey.informaticamajada.es/auth/user', {
       method: 'GET',
       credentials: 'include', 
       headers: {
