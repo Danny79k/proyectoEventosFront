@@ -1,41 +1,52 @@
-import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Layout from './layouts/layout'
-import Index from './pages'
-import Login from './pages/Login'
-import Asociaciones from './pages/Asociaciones'
-import Asociacion from './pages/Asociacion'
-import NuevoAsociacion from './pages/NuevaAsociacion'
-import Eventos from './pages/Eventos'
-import Evento from './pages/Evento'
-import NuevoEvento from './pages/NuevoEvento'
-import NotFound from './pages/NotFound'
+import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './layouts/layout';
+import Index from './pages';
+import Login from './pages/Login';
+import Asociaciones from './pages/Asociaciones';
+import Asociacion from './pages/Asociacion';
+import NuevoAsociacion from './pages/NuevaAsociacion';
+import Eventos from './pages/Eventos';
+import Evento from './pages/Evento';
+import NuevoEvento from './pages/NuevoEvento';
+import NotFound from './pages/NotFound';
 import { LightContext, EventContext, AsociationContext, TypeContext } from './utils/Context'
-// import useFetchAuth from './components/useFetchAuth'
-// import Loading from './components/Loading'
-
-
-import './App.css'
+import './App.css';
 
 
 function App() {
 
-  const [light, setLight] = useState(localStorage.getItem("theme") || true)
-  const [eventos, setEventos] = useState(null)
-  const [asociaciones, setAsociationes] = useState(null)
+  const [light, setLight] = useState(localStorage.getItem("theme") === "true");
+  const [eventos, setEventos] = useState(null);
+  const [asociaciones, setAsociationes] = useState(null);
+  const [user, setUser] = useState(null);
   const [types, setTypes] = useState(null)
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://jeffrey.informaticamajada.es/auth/user', {
+      method: 'GET',
+      credentials: 'include', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      setUser(data);
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      setLoading(false);
+    });
+  }, []); // Se ejecuta solo una vez al montar el componente
+
+  if (loading) return <p>Cargando...</p>;
 
 
-  // const { data, loading, error } = useFetchAuth("https://jeffrey.informaticamajada.es/auth/check")
-
-  // if (loading) return (<Loading />)
-  // if (error) return (<h1>Error</h1>)
-  // if (data) {
-  // console.log(data);
   return (
-    // (data.authentificated === false) ?
-    //   window.location.href = "https://jeffrey.informaticamajada.es/login"
-    //   :
     <>
       <LightContext.Provider value={{ light, setLight }}>
         <TypeContext.Provider value={{ types, setTypes }}>
@@ -64,4 +75,4 @@ function App() {
 
 }
 
-export default App
+export default App;
