@@ -84,7 +84,7 @@ export default function Asociaciones() {
             {ultimasAsociaciones}
             <h1 className="text-center text-5xl">Todas las asociaciones</h1>
             <div className="flex flex-wrap justify-center mt-6">
-                {associations.map(aso => {
+                {associations.data.map(aso => {
                     return (
                         <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
