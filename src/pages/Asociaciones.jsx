@@ -10,22 +10,69 @@ export default function Asociaciones() {
 
     const { setAsociationes } = useContext(AsociationContext)
     const [asociacionesLocal, setAsociacionesLocal] = useState([])
-    const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
 
-    useEffect(() => {
-        if (data) setAsociationes(data)
-    })
+    const [associations, setAssociations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    // const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
+
+    // useEffect(() => {
+    //     if (data) setAsociationes(data)
+    // })
 
     useEffect(() => {
         const asociacionesGuardadas = JSON.parse(localStorage.getItem("ultimasAsociaciones")) || []
         setAsociacionesLocal(asociacionesGuardadas)
     }, [])
 
-    if (loading) return (<div className="mt-20"><Loading /></div>)
-    if (error) return (<div className="mt-20"><Error /></div>)
+    // if (loading) return (<div className="mt-20"><Loading /></div>)
+    // if (error) return (<div className="mt-20"><Error /></div>)
 
+    useEffect(() => {
+        // 1. Obtener el CSRF Token
+        fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+            method: 'GET',
+            credentials: 'include', // Necesario para enviar cookies de sesión
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener el token CSRF');
+                }
+                // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+                return fetch('https://jeffrey.informaticamajada.es/api/associations', {
+                    method: 'GET',
+                    credentials: 'include', // Importante para incluir las cookies de sesión
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No autorizado o error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAssociations(data); // Almacenar los datos obtenidos
+                setLoading(false); // Cambiar estado de carga a false
+            })
+            .catch(error => {
+                setError('Error al obtener asociaciones: ' + error.message);
+                setLoading(false); // Finalizar carga con error
+            });
+    }, []); // El efecto se ejecutará solo una vez al montar el componente
 
-    const asociations = data.data
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    console.log(associations)
+
     let ultimasAsociaciones = ""
 
     if (!asociacionesLocal.length == 0) {
@@ -37,7 +84,7 @@ export default function Asociaciones() {
             {ultimasAsociaciones}
             <h1 className="text-center text-5xl">Todas las asociaciones</h1>
             <div className="flex flex-wrap justify-center mt-6">
-                {asociations.map(aso => {
+                {associations.data.map(aso => {
                     return (
                         <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
