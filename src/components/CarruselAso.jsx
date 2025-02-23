@@ -29,7 +29,7 @@ export default function CarruselAso({ asociacionesLocal }) {
                             <Link to={`/asociacion/${aso.id}`}>
                                 <img
                                     className="w-full h-48 object-cover"
-                                    src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"}
+                                    src={aso.main_image}
                                     alt={aso.name}
                                 />
                                 <div className="p-5">

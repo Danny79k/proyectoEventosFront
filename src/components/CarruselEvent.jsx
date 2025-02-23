@@ -26,7 +26,7 @@ export default function CarruselAso({ eventosLocal }) {
                 {eventosLocal.map(evento => (
                     <SwiperSlide key={evento.id} className="flex justify-center">
                         <Link className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id} to={`/evento/${evento.id}`}>
-                            <img className="w-full h-48 object-cover" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"} alt={"name"} />
+                            <img className="w-full h-48 object-cover" src={evento.main_image} alt={"name"} />
                             <div className="p-5">
                                 <h2 className="text-2xl font-bold ">{evento.title}</h2>
                                 <p className="mt-2 ">{evento.description}</p>

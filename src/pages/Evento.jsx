@@ -24,7 +24,7 @@ export default function Evento() {
         <div className="mt-20">
             <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/eventos"}> ◄◄ Volver ◄◄ </Link>
             <div className="px-5 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 mt-5" key={evento.id}>
-                <img className="w-full h-150 object-cover" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"} alt={"name"} />
+                <img className="w-full h-150 object-cover" src={evento.main_image} alt={"name"} />
                 <div className="p-5">
                     <h2 className="text-2xl font-bold ">{evento.title}</h2>
                     <p className="mt-2 ">{evento.description}</p>

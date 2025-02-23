@@ -28,7 +28,7 @@ export default function Asociacion() {
             <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/asociaciones"}> ◄◄ Volver ◄◄ </Link>
             <div className="px-5 mt-5">
                 <div >
-                    <img className="w-full h-150 object-cover" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"} alt={"name"} />
+                    <img className="w-full h-150 object-cover" src={asociacion.main_image} alt={"name"} />
                     <div className="p-5">
                         <h2 className="text-2xl font-bold ">{asociacion.name}</h2>
                         <p className="mt-2 ">{asociacion.description}</p>

@@ -41,7 +41,7 @@ export default function Asociaciones() {
                     return (
                         <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
-                                <img className="w-full h-48 object-cover" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&s"} alt={"name"} />
+                                <img className="w-full h-48 object-cover" src={aso.main_image} alt={"name"} />
                                 <div className="p-5">
                                     <h2 className="text-2xl font-bold ">{aso.name}</h2>
                                     <p className="mt-2 ">{aso.description}</p>
