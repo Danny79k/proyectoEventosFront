@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
-import useFetch from "../components/useFetchAuth";
+
 import { TypeContext } from "../utils/Context";
-import Loading from "../components/Loading";
+
 
 export default function NuevoAsociacion() {
     const [datas, setDatas] = useState({
@@ -13,15 +13,7 @@ export default function NuevoAsociacion() {
         type: "",
         maxMembers: "",
     });
-    const { types, setTypes } = useContext(TypeContext)
-    const { data, loading,  error } = useFetch("https://jeffrey.informaticamajada.es/api/types")
-
-    useEffect(() => {
-        if (error) setTypes("Error")
-    })
-    useEffect(() => {
-        if(data) setTypes(data)
-    })
+    const { types } = useContext(TypeContext)
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -45,9 +37,8 @@ export default function NuevoAsociacion() {
         });
     };
 
-    if(loading) return (<Loading />)
-    
-    console.log(data.data);
+
+    console.log(types.data);
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Formulario</h2>
@@ -117,7 +108,7 @@ export default function NuevoAsociacion() {
                         required
                     >
                         <option value="">Selecciona un tipo</option>
-                        {data.data.map(type => (
+                        {types.data.map(type => (
                             <option key={type.id} value={type.type}>
                                 {type.type}
                             </option>

@@ -10,6 +10,8 @@ import Eventos from './pages/Eventos';
 import Evento from './pages/Evento';
 import NuevoEvento from './pages/NuevoEvento';
 import NotFound from './pages/NotFound';
+import useFetch from './components/useFetch';
+import Loading from './components/Loading';
 import { LightContext, EventContext, AsociationContext, TypeContext } from './utils/Context'
 import './App.css';
 
@@ -22,6 +24,16 @@ function App() {
   const [user, setUser] = useState(null);
   const [types, setTypes] = useState(null)
   const [loading, setLoading] = useState(true);
+
+  const { data, error } = useFetch("https://jeffrey.informaticamajada.es/api/types")
+
+  useEffect(() => {
+      if (error) setTypes("Error")
+  },[error])
+
+  useEffect(() => {
+      if (data) setTypes(data)
+  },[data])
 
   useEffect(() => {
     fetch('https://jeffrey.informaticamajada.es/auth/user', {
@@ -43,7 +55,7 @@ function App() {
     });
   }, []); // Se ejecuta solo una vez al montar el componente
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return (<Loading/>);
 
 
   return (
