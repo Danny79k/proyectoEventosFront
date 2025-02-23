@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-
+import useFetch from "../components/useFetchAuth";
+import { TypeContext } from "../utils/Context";
+import Loading from "../components/Loading";
 
 export default function NuevoAsociacion() {
-    const [data, setData] = useState({
+    const [datas, setDatas] = useState({
         name: "",
         description: "",
         phone: "",
@@ -11,12 +13,19 @@ export default function NuevoAsociacion() {
         type: "",
         maxMembers: "",
     });
+    const { types, setTypes } = useContext(TypeContext)
+    const { data, loading,  error } = useFetch("https://jeffrey.informaticamajada.es/api/types")
 
-    const types = ["Tipo 1", "Tipo 2", "Tipo 3", "Otro"]; // Puedes personalizar estos valores
+    useEffect(() => {
+        if (error) setTypes("Error")
+    })
+    useEffect(() => {
+        if(data) setTypes(data)
+    })
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setData((prev) => ({
+        setDatas((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
@@ -25,8 +34,8 @@ export default function NuevoAsociacion() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new formData()
-        for (const key in data) {
-            formData.append(key, data[key]);
+        for (const key in datas) {
+            formData.append(key, datas[key]);
         }
         console.log("Formulario enviado:", formData);
         Swal.fire({
@@ -36,6 +45,9 @@ export default function NuevoAsociacion() {
         });
     };
 
+    if(loading) return (<Loading />)
+    
+    console.log(data.data);
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Formulario</h2>
@@ -46,7 +58,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="text"
                         name="name"
-                        value={data.name}
+                        value={datas.name}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
@@ -58,7 +70,7 @@ export default function NuevoAsociacion() {
                     <label className="block font-semibold">Descripción:</label>
                     <textarea
                         name="description"
-                        value={data.description}
+                        value={datas.description}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         rows="4"
@@ -72,7 +84,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="tel"
                         name="phone"
-                        value={data.phone}
+                        value={datas.phone}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         pattern="[0-9]{10}"
@@ -87,7 +99,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="email"
                         name="email"
-                        value={data.email}
+                        value={datas.email}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
@@ -99,15 +111,15 @@ export default function NuevoAsociacion() {
                     <label className="block font-semibold">Tipo:</label>
                     <select
                         name="type"
-                        value={data.type}
+                        value={datas.type}
                         onChange={handleChange}
                         className="w-full p-2 border rounded-lg"
                         required
                     >
                         <option value="">Selecciona un tipo</option>
-                        {types.map((type) => (
-                            <option key={type} value={type}>
-                                {type}
+                        {data.data.map(type => (
+                            <option key={type.id} value={type.type}>
+                                {type.type}
                             </option>
                         ))}
                     </select>
@@ -118,7 +130,7 @@ export default function NuevoAsociacion() {
                     <input
                         type="checkbox"
                         name="maxMembersEnabled"
-                        checked={data.maxMembersEnabled}
+                        checked={datas.maxMembersEnabled}
                         onChange={handleChange}
                         className="mr-2"
                     />
@@ -126,13 +138,13 @@ export default function NuevoAsociacion() {
                 </div>
 
                 {/* Input de número si el checkbox está activo */}
-                {data.maxMembersEnabled && (
+                {datas.maxMembersEnabled && (
                     <div>
                         <label className="block font-semibold">Número máximo de miembros:</label>
                         <input
                             type="number"
                             name="maxMembers"
-                            value={data.maxMembers}
+                            value={datas.maxMembers}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-lg"
                             min="1"

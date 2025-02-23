@@ -10,7 +10,7 @@ import Eventos from './pages/Eventos'
 import Evento from './pages/Evento'
 import NuevoEvento from './pages/NuevoEvento'
 import NotFound from './pages/NotFound'
-import { LightContext, EventContext, AsociationContext } from './utils/Context'
+import { LightContext, EventContext, AsociationContext, TypeContext } from './utils/Context'
 // import useFetchAuth from './components/useFetchAuth'
 // import Loading from './components/Loading'
 
@@ -23,6 +23,7 @@ function App() {
   const [light, setLight] = useState(localStorage.getItem("theme") || true)
   const [eventos, setEventos] = useState(null)
   const [asociaciones, setAsociationes] = useState(null)
+  const [types, setTypes] = useState(null)
 
 
   // const { data, loading, error } = useFetchAuth("https://jeffrey.informaticamajada.es/auth/check")
@@ -37,23 +38,25 @@ function App() {
     //   :
     <>
       <LightContext.Provider value={{ light, setLight }}>
-        <EventContext.Provider value={{ eventos, setEventos }}>
-          <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
-            <Routes>
-              <Route path='/' element={<Layout />}>
-                <Route element={<Login />} path='/login'></Route>
-                <Route element={<Index />} path='/'></Route>
-                <Route element={<Asociaciones />} path='/asociaciones'></Route>
-                <Route element={<Asociacion/>} path='/asociacion/:id'></Route>
-                <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
-                <Route element={<Eventos />} path='/eventos'></Route>
-                <Route element={<Evento/>} path='/evento/:id'></Route>
-                <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
-                <Route element={<NotFound />} path='/*'></Route>
-              </Route>
-            </Routes>
-          </AsociationContext.Provider>
-        </EventContext.Provider>
+        <TypeContext.Provider value={{ types, setTypes }}>
+          <EventContext.Provider value={{ eventos, setEventos }}>
+            <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
+              <Routes>
+                <Route path='/' element={<Layout />}>
+                  <Route element={<Login />} path='/login'></Route>
+                  <Route element={<Index />} path='/'></Route>
+                  <Route element={<Asociaciones />} path='/asociaciones'></Route>
+                  <Route element={<Asociacion />} path='/asociacion/:id'></Route>
+                  <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
+                  <Route element={<Eventos />} path='/eventos'></Route>
+                  <Route element={<Evento />} path='/evento/:id'></Route>
+                  <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
+                  <Route element={<NotFound />} path='/*'></Route>
+                </Route>
+              </Routes>
+            </AsociationContext.Provider>
+          </EventContext.Provider>
+        </TypeContext.Provider>
       </LightContext.Provider>
     </>
   )
