@@ -12,7 +12,7 @@ import NuevoEvento from './pages/NuevoEvento';
 import NotFound from './pages/NotFound';
 import useFetch from './components/useFetch';
 import Loading from './components/Loading';
-import { LightContext, EventContext, AsociationContext, TypeContext } from './utils/Context'
+import { LightContext, EventContext, AsociationContext, TypeContext, UserContext } from './utils/Context'
 import './App.css';
 
 
@@ -25,61 +25,66 @@ function App() {
   const [types, setTypes] = useState(null)
   const [loading, setLoading] = useState(true);
 
-  const { data, error } = useFetch("https://jeffrey.informaticamajada.es/api/types")
-
-  useEffect(() => {
-      if (error) setTypes("Error")
-  },[error])
-
-  useEffect(() => {
-      if (data) setTypes(data)
-  },[data])
 
   useEffect(() => {
     fetch('https://jeffrey.informaticamajada.es/auth/user', {
       method: 'GET',
-      credentials: 'include', 
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      setUser(data);
-      setLoading(false);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      setLoading(false);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setUser(data);
+        console.log(user);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoading(false);
+      });
   }, []); // Se ejecuta solo una vez al montar el componente
 
-  if (loading) return (<Loading/>);
+  const { data, error } = useFetch("https://jeffrey.informaticamajada.es/api/types")
+
+  useEffect(() => {
+    if (error) setTypes("Error")
+  }, [error])
+
+  useEffect(() => {
+    if (data) setTypes(data)
+  }, [data])
+
+  if (loading) return (<Loading />);
 
 
   return (
     <>
       <LightContext.Provider value={{ light, setLight }}>
-        <TypeContext.Provider value={{ types, setTypes }}>
-          <EventContext.Provider value={{ eventos, setEventos }}>
-            <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
-              <Routes>
-                <Route path='/' element={<Layout />}>
-                  <Route element={<Login />} path='/login'></Route>
-                  <Route element={<Index />} path='/'></Route>
-                  <Route element={<Asociaciones />} path='/asociaciones'></Route>
-                  <Route element={<Asociacion />} path='/asociacion/:id'></Route>
-                  <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
-                  <Route element={<Eventos />} path='/eventos'></Route>
-                  <Route element={<Evento />} path='/evento/:id'></Route>
-                  <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
-                  <Route element={<NotFound />} path='/*'></Route>
-                </Route>
-              </Routes>
-            </AsociationContext.Provider>
-          </EventContext.Provider>
-        </TypeContext.Provider>
+        <UserContext.Provider value={{ user, setUser }}>
+
+          <TypeContext.Provider value={{ types, setTypes }}>
+            <EventContext.Provider value={{ eventos, setEventos }}>
+              <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
+                <Routes>
+                  <Route path='/' element={<Layout />}>
+                    <Route element={<Login />} path='/login'></Route>
+                    <Route element={<Index />} path='/'></Route>
+                    <Route element={<Asociaciones />} path='/asociaciones'></Route>
+                    <Route element={<Asociacion />} path='/asociacion/:id'></Route>
+                    <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
+                    <Route element={<Eventos />} path='/eventos'></Route>
+                    <Route element={<Evento />} path='/evento/:id'></Route>
+                    <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
+                    <Route element={<NotFound />} path='/*'></Route>
+                  </Route>
+                </Routes>
+              </AsociationContext.Provider>
+            </EventContext.Provider>
+          </TypeContext.Provider>
+        </UserContext.Provider>
       </LightContext.Provider>
     </>
   )

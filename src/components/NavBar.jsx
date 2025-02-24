@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { LightContext } from "../utils/Context";
+import { LightContext, UserContext } from "../utils/Context";
 import { Menu, X, Sun, Moon } from "lucide-react";
+
 
 
 export default function NavBar() {
     const { light, setLight } = useContext(LightContext)
+    const { user } = useContext(UserContext)
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenNav, setIsOpenNav] = useState(false);
     const [navBg, setNavBg] = useState("bg-transparent");
-
 
     useEffect(() => {
         const handleScroll = () => {
@@ -115,12 +116,19 @@ export default function NavBar() {
             </nav>
             <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"} ${navBg} fixed right-100 top-20 z-20`}>
                 <div className={`grid grid-cols-4  p-4 space-y-4 ${navBg}`}>
-                    <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
-                    <NavLink to={"https://jeffrey.informaticamajada.es/register"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                    <NavLink id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</NavLink>
+                    {(user != null) ?
+                        <>
+                            <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
+                            <NavLink to={"https://jeffrey.informaticamajada.es/register"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
+                        </>
+                        :
+                        <>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
+                            <NavLink id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</NavLink>
+                        </>
+                    }
                 </div>
             </div>
         </div>
