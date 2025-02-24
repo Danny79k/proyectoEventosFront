@@ -127,9 +127,26 @@ export default function NavBar() {
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                            <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="col-end-1">
-                                <button id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
-                            </form>
+                            <button id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
+                            {document.querySelector('#logout').addEventListener('click', () => {
+                                fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+                                    method: 'GET',
+                                    credentials: 'include', // Necesario para enviar cookies de sesión
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('No se pudo obtener el token CSRF');
+                                        }
+                                        // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+                                        return fetch('https://jeffrey.informaticamajada.es/logout', {
+                                            method: 'POST',
+                                            credentials: 'include', // Importante para incluir las cookies de sesión
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                        });
+                                    })
+                            })}
                         </>
                     }
                 </div>
@@ -137,25 +154,5 @@ export default function NavBar() {
         </div>
     );
 }
-
-document.querySelector('#logout').addEventListener('click', () => {
-    fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
-        method: 'GET',
-        credentials: 'include', // Necesario para enviar cookies de sesión
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('No se pudo obtener el token CSRF');
-            }
-            // 2. Hacer la solicitud a la API después de obtener el CSRF Token
-            return fetch('https://jeffrey.informaticamajada.es/logout', {
-                method: 'POST',
-                credentials: 'include', // Importante para incluir las cookies de sesión
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        })
-})
 
 
