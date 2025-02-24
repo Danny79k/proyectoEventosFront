@@ -38,7 +38,7 @@ function App() {
       .then(data => {
         console.log(data);
         setUser(data);
-        console.log(user);
+        console.log(data);
         setLoading(false);
       })
       .catch(error => {
@@ -64,7 +64,6 @@ function App() {
     <>
       <LightContext.Provider value={{ light, setLight }}>
         <UserContext.Provider value={{ user, setUser }}>
-
           <TypeContext.Provider value={{ types, setTypes }}>
             <EventContext.Provider value={{ eventos, setEventos }}>
               <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
