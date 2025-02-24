@@ -143,7 +143,7 @@ export default function NavBar() {
                                             throw new Error('No se pudo obtener el token CSRF');
                                         }
                                         // 2. Hacer la solicitud a la API después de obtener el CSRF Token
-                                        return fetch('https://jeffrey.informaticamajada.es/logout', {
+                                        return fetch('https://jeffrey.informaticamajada.es/api/logout', {
                                             method: 'POST',
                                             credentials: 'include', // Importante para incluir las cookies de sesión
                                             headers: {
