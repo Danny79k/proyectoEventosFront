@@ -63,13 +63,9 @@ export default function Asociaciones() {
             });
     }, []); // El efecto se ejecutará solo una vez al montar el componente
 
-    if (loading) {
-        return (<Loading/>)
-    }
-
-    if (error) {
-        return (<Error/>);
-    }
+    if (loading) return (<div className="mt-20"><Loading/></div>)
+    if (error) return (<div className="mt-20"><Error/></div>);
+    
 
     console.log(asociaciones)
 

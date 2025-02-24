@@ -77,7 +77,7 @@ export default function NavBar() {
                                 setIsOpenNav(!isOpenNav)
                             }}
                         >
-                            {user ? <p>{user.name}</p> :""}
+                            {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> :""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
                         </button>
                     </div>
