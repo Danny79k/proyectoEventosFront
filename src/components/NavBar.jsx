@@ -116,14 +116,21 @@ export default function NavBar() {
             </nav>
             <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"} ${navBg} fixed right-100 top-20 z-20`}>
                 <div className={`grid grid-cols-4  p-4 space-y-4 ${navBg}`}>
-                    <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
-                    <NavLink to={"https://jeffrey.informaticamajada.es/register"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
-                    <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                    <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="col-end-1">
-                        <button id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
-                    </form>
+                    {(user == null) ?
+                        <>
+                            <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
+                            <NavLink to={"https://jeffrey.informaticamajada.es/register"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
+                        </>
+                        :
+                        <>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
+                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
+                            <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="col-end-1">
+                                <button id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
+                            </form>
+                        </>
+                    }
                 </div>
             </div>
         </div>
