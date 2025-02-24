@@ -77,6 +77,7 @@ export default function NavBar() {
                                 setIsOpenNav(!isOpenNav)
                             }}
                         >
+                            {user ? <p>{user.name}</p> :""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
                         </button>
                     </div>
