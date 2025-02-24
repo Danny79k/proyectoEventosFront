@@ -77,7 +77,7 @@ export default function NavBar() {
                                 setIsOpenNav(!isOpenNav)
                             }}
                         >
-                            {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> :""}
+                            {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
                         </button>
                     </div>
@@ -137,4 +137,25 @@ export default function NavBar() {
         </div>
     );
 }
+
+document.querySelector('#logout').addEventListener('click', () => {
+    fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+        method: 'GET',
+        credentials: 'include', // Necesario para enviar cookies de sesión
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudo obtener el token CSRF');
+            }
+            // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+            return fetch('https://jeffrey.informaticamajada.es/logout', {
+                method: 'POST',
+                credentials: 'include', // Importante para incluir las cookies de sesión
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        })
+})
+
 
