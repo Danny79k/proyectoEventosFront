@@ -38,7 +38,6 @@ function App() {
       .then(data => {
         console.log(data);
         setUser(data);
-        console.log(data);
         setLoading(false);
       })
       .catch(error => {
