@@ -120,6 +120,7 @@ export default function NavBar() {
                             onClick={() => {
                                 setIsOpenNav(!isOpenNav)
                             }}
+                            className="flex"
                         >
                             {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
