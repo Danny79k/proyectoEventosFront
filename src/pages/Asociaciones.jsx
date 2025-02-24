@@ -1,4 +1,4 @@
-import useFetch from "../components/useFetch"
+// import useFetch from "../components/useFetch"
 import Loading from "../components/Loading"
 import Error from "../components/Error"
 import CarruselAso from "../components/CarruselAso"
@@ -8,10 +8,9 @@ import { useContext, useEffect, useState } from "react"
 
 export default function Asociaciones() {
 
-    const { setAsociationes } = useContext(AsociationContext)
+    const { asociaciones, setAsociationes } = useContext(AsociationContext)
     const [asociacionesLocal, setAsociacionesLocal] = useState([])
 
-    const [associations, setAssociations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     // const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
@@ -54,24 +53,25 @@ export default function Asociaciones() {
                 return response.json();
             })
             .then(data => {
-                setAssociations(data); // Almacenar los datos obtenidos
+                setAsociationes(data); // Almacenar los datos obtenidos
                 setLoading(false); // Cambiar estado de carga a false
             })
             .catch(error => {
                 setError('Error al obtener asociaciones: ' + error.message);
                 setLoading(false); // Finalizar carga con error
+                console.log(error.message);
             });
     }, []); // El efecto se ejecutará solo una vez al montar el componente
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (<Loading/>)
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return (<Error/>);
     }
 
-    console.log(associations)
+    console.log(asociaciones)
 
     let ultimasAsociaciones = ""
 
@@ -84,7 +84,7 @@ export default function Asociaciones() {
             {ultimasAsociaciones}
             <h1 className="text-center text-5xl">Todas las asociaciones</h1>
             <div className="flex flex-wrap justify-center mt-6">
-                {associations.data.map(aso => {
+                {asociaciones.data.map(aso => {
                     return (
                         <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
