@@ -28,7 +28,7 @@ export default function NavBar() {
                 method: 'GET',
                 credentials: 'include',
             });
-    
+
             if (!csrfResponse.ok) {
                 throw new Error('No se pudo obtener el token CSRF');
             }
@@ -42,11 +42,11 @@ export default function NavBar() {
                     'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'), // Asegúrate de enviar el token CSRF
                 },
             });
-    
+
             if (!logoutResponse.ok) {
                 throw new Error('Error durante el logout');
             }
-    
+
             // 3. Manejar la respuesta exitosa
             console.log('Logout exitoso');
             // Aquí puedes redirigir al usuario o actualizar el estado de tu aplicación
@@ -171,10 +171,9 @@ export default function NavBar() {
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                            <button onClick={handleLogout} className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
-                            { logout === true &&
-                                handleLogoutPOST()
-                            }
+                            <form method="get" action="https://jeffrey.informaticamajada.es/logout-user">
+                                <button onClick={handleLogout} className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
+                            </form>
                         </>
                     }
                 </div>
