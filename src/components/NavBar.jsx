@@ -17,6 +17,41 @@ export default function NavBar() {
         setLogout(true)
     }
 
+    const handleLogoutPOST = async () => {
+        try {
+            // 1. Obtener el token CSRF
+            const csrfResponse = await fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+                method: 'GET',
+                credentials: 'include',
+            });
+    
+            if (!csrfResponse.ok) {
+                throw new Error('No se pudo obtener el token CSRF');
+            }
+    
+            // 2. Realizar el logout
+            const logoutResponse = await fetch('https://jeffrey.informaticamajada.es/api/logout', {
+                method: 'POST',
+                credentials: 'include', // Importante para incluir las cookies de sesión
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'), // Asegúrate de enviar el token CSRF
+                },
+            });
+    
+            if (!logoutResponse.ok) {
+                throw new Error('Error durante el logout');
+            }
+    
+            // 3. Manejar la respuesta exitosa
+            console.log('Logout exitoso');
+            // Aquí puedes redirigir al usuario o actualizar el estado de tu aplicación
+        } catch (error) {
+            console.error('Hubo un problema:', error);
+            // Manejar errores (mostrar mensaje al usuario, etc.)
+        }
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 200 || isOpenNav || isOpen) {
@@ -134,23 +169,7 @@ export default function NavBar() {
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
                             <button onClick={handleLogout} className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
                             { logout === true &&
-                                fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
-                                    method: 'GET',
-                                    credentials: 'include', // Necesario para enviar cookies de sesión
-                                })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error('No se pudo obtener el token CSRF');
-                                        }
-                                        // 2. Hacer la solicitud a la API después de obtener el CSRF Token
-                                        return fetch('https://jeffrey.informaticamajada.es/api/logout', {
-                                            method: 'POST',
-                                            credentials: 'include', // Importante para incluir las cookies de sesión
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                        });
-                                    })
+                                handleLogoutPOST()
                             }
                         </>
                     }
