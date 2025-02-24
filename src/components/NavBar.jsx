@@ -16,7 +16,11 @@ export default function NavBar() {
     const handleLogout = () => {
         setLogout(true)
     }
-
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
     const handleLogoutPOST = async () => {
         try {
             // 1. Obtener el token CSRF
@@ -28,7 +32,7 @@ export default function NavBar() {
             if (!csrfResponse.ok) {
                 throw new Error('No se pudo obtener el token CSRF');
             }
-    
+            console.log(csrfResponse)
             // 2. Realizar el logout
             const logoutResponse = await fetch('https://jeffrey.informaticamajada.es/api/logout', {
                 method: 'POST',
