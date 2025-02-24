@@ -11,6 +11,11 @@ export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenNav, setIsOpenNav] = useState(false);
     const [navBg, setNavBg] = useState("bg-transparent");
+    const [logout, setLogout] = useState(false)
+
+    const handleLogout = () => {
+        setLogout(true)
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -98,7 +103,7 @@ export default function NavBar() {
                             </NavLink>
                         ))}
                         <button
-                            className={`p-2 ${(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
+                            className={`p-2 $<form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="col-end-1">{(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
                             onTouchStart={() => {
                                 setLight(!light)
                                 if (light) {
@@ -127,8 +132,8 @@ export default function NavBar() {
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                            <button id="logout" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
-                            {document.querySelector('#logout').addEventListener('click', () => {
+                            <button onClick={handleLogout} className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
+                            { logout === true &&
                                 fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
                                     method: 'GET',
                                     credentials: 'include', // Necesario para enviar cookies de sesión
@@ -146,7 +151,7 @@ export default function NavBar() {
                                             },
                                         });
                                     })
-                            })}
+                            }
                         </>
                     }
                 </div>
