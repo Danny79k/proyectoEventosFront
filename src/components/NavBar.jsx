@@ -83,9 +83,10 @@ export default function NavBar() {
 
                     {/* Botón del menú hamburguesa */}
                     <button
-                        className="lg:hidden p-2 rounded-md focus:outline-none"
+                        className="lg:hidden p-2 rounded-md focus:outline-none flex text-gray-400 items-center"
                         onClick={() => setIsOpen(!isOpen)}
                     >
+                        {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                         {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
                     </button>
 
@@ -120,7 +121,7 @@ export default function NavBar() {
                             onClick={() => {
                                 setIsOpenNav(!isOpenNav)
                             }}
-                            className="flex"
+                            className="flex text-gray-400 items-center"
                         >
                             {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
@@ -132,7 +133,7 @@ export default function NavBar() {
                 {/* Menú desplegable en móviles */}
                 {isOpen && (
                     <div className="lg:hidden flex flex-col items-center space-y-4 py-4 mt-2 rounded-md shadow-md">
-                        {["", "Asociaciones", "Eventos", "Login"].map((item, index) => (
+                        {["", "Asociaciones", "Eventos"].map((item, index) => (
                             <NavLink
                                 key={index}
                                 to={`/${item.toLowerCase()}`}
@@ -142,6 +143,22 @@ export default function NavBar() {
                                 {(item) ? item : "Inicio"}
                             </NavLink>
                         ))}
+                        {user ?
+                            <>
+                                <NavLink to={"/mis-asociaciones"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Asociaciones</NavLink>
+                                <NavLink to={"#"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Eventos</NavLink>
+                                <NavLink to={"#"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mi Calendario</NavLink>
+                                <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="w-full text-center bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">
+                                    <button onClick={handleLogout} >Logout</button>
+                                </form>
+                            </>
+                            :
+                            <>
+                                <NavLink to={"https://jeffrey.informaticamajada.es/login"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Login</NavLink>
+                                <NavLink to={"https://jeffrey.informaticamajada.es/register"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Sign-In</NavLink>
+                            </>
+
+                        }
                         <button
                             className={`p-2 $<form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="col-end-1">{(light) ? "bg-blue-200" : "dark:bg-gray-900"} rounded-full shadow-md transition-all duration-300`}
                             onTouchStart={() => {
@@ -169,11 +186,11 @@ export default function NavBar() {
                         </>
                         :
                         <>
-                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
+                            <NavLink to={"/mis-asociaciones"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
-                            <form method="get" action="https://jeffrey.informaticamajada.es/logout-user">
-                                <button onClick={handleLogout} className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">Logout</button>
+                            <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">
+                                <button onClick={handleLogout} >Logout</button>
                             </form>
                         </>
                     }

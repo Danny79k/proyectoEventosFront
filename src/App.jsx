@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Asociaciones from './pages/Asociaciones';
 import Asociacion from './pages/Asociacion';
 import NuevoAsociacion from './pages/NuevaAsociacion';
+import MisAsociaciones from './pages/MisAsociaciones';
 import Eventos from './pages/Eventos';
 import Evento from './pages/Evento';
 import NuevoEvento from './pages/NuevoEvento';
@@ -71,6 +72,7 @@ function App() {
                     <Route element={<Login />} path='/login'></Route>
                     <Route element={<Index />} path='/'></Route>
                     <Route element={<Asociaciones />} path='/asociaciones'></Route>
+                    <Route element={<MisAsociaciones />} path='/mis-asociaciones'></Route>
                     <Route element={<Asociacion />} path='/asociacion/:id'></Route>
                     <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
                     <Route element={<Eventos />} path='/eventos'></Route>
