@@ -13,6 +13,7 @@ import NuevoEvento from './pages/NuevoEvento';
 import NotFound from './pages/NotFound';
 import useFetch from './components/useFetch';
 import Loading from './components/Loading';
+import CalendarComponent from './components/Calendar';
 import { LightContext, EventContext, AsociationContext, TypeContext, UserContext } from './utils/Context'
 import './App.css';
 
@@ -78,6 +79,7 @@ function App() {
                     <Route element={<Eventos />} path='/eventos'></Route>
                     <Route element={<Evento />} path='/evento/:id'></Route>
                     <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
+                    <Route element={<CalendarComponent/>} path='/calendario'></Route>
                     <Route element={<NotFound />} path='/*'></Route>
                   </Route>
                 </Routes>

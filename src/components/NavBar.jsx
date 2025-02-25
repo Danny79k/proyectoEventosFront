@@ -147,7 +147,7 @@ export default function NavBar() {
                             <>
                                 <NavLink to={"/mis-asociaciones"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Asociaciones</NavLink>
                                 <NavLink to={"#"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Eventos</NavLink>
-                                <NavLink to={"#"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mi Calendario</NavLink>
+                                <NavLink to={"/calendario"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mi Calendario</NavLink>
                                 <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="w-full text-center bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">
                                     <button onClick={handleLogout} >Logout</button>
                                 </form>
@@ -188,7 +188,7 @@ export default function NavBar() {
                         <>
                             <NavLink to={"/mis-asociaciones"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Asociaciones</NavLink>
                             <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mis Eventos</NavLink>
-                            <NavLink to={"#"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
+                            <NavLink to={"/calendario"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Mi Calendario</NavLink>
                             <form method="get" action="https://jeffrey.informaticamajada.es/logout-user" className="bg-red-500 col-end-1 p-1 hover:border-none rounded-2xl">
                                 <button onClick={handleLogout} >Logout</button>
                             </form>

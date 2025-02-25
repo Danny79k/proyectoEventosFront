@@ -36,12 +36,43 @@ export default function NuevoAsociacion() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const getCsrfToken = async () => {
+        try {
+            await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
+                method: "GET",
+                credentials: "include" // 👈 Importante para incluir cookies en la solicitud
+            });
+            console.log("CSRF Token obtenido");
+        } catch (error) {
+            console.error("Error obteniendo CSRF Token:", error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        await getCsrfToken()
         const formDataAso = new FormData()
         for (const key in formData) {
             formDataAso.append(key, formData[key]);
         }
+        fetch('https://jeffrey.informaticamajada.es/api/associations', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": "application/json",
+            },
+            body: formDataAso,
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // setUser(data);
+                // setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // setLoading(false);
+            });
 
         for (let pair of formDataAso.entries()) {
             console.log(pair[0], pair[1]);

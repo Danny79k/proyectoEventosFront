@@ -31,7 +31,7 @@ export default function Eventos() {
     if (!eventosLocal.length == 0) {
         ultimosEventos = <CarruselEvent eventosLocal={eventosLocal}></CarruselEvent>
     }
-
+    console.log(data.data);
     return (
         <div className="mt-20">
             {ultimosEventos}
