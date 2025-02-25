@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { LightContext } from "../utils/Context";
 import Swal from "sweetalert2";
-import '../css/NuevoEventoCss.css'
 
 export default function NuevoEvento() {
 
@@ -43,7 +42,7 @@ export default function NuevoEvento() {
     };
 
     return (
-        <div className="bg-white max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
+        <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Crear Evento</h2>
             <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
                 {/* Título */}
