@@ -6,8 +6,8 @@ export default function Footer() {
     const { light } = useContext(LightContext)
 
     return (
-        <div className={`py-12`}>
-            <div className={`${(!light)? "bg-amber-50":"bg-gray-800"} rounded-2xl flex justify-around`}>
+        <div className={`py-12 ${(!light) ? "bg-amber-50 claro" : "bg-gray-800 oscuro"}`}>
+            <div className={`rounded-2xl flex justify-around`}>
                 <div className='grid grid-cols-3'>
                     <div className='flex flex-col text-gray-500 p-5 text-center'>
                         <h5 className='text-gray-400 text-left text-2xl border-b mb-5'>Contenido legal</h5>
