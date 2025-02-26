@@ -59,6 +59,7 @@ export default function Eventos() {
             });
     }, []); // El efecto se ejecutará solo una vez al montar el componente
 
+    console.log(eventos);
     const eventosData = eventos.data
     const filtered = searchEventos.get('filter') || ''
 
@@ -68,7 +69,6 @@ export default function Eventos() {
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
 
-    console.log(eventos);
 
     let ultimosEventos = ""
 
