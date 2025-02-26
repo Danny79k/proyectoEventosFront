@@ -8,6 +8,7 @@ export default function Asociacion() {
     const { asociaciones } = useContext(AsociationContext)
     const params = useParams()
     const asociacion = asociaciones.data[params.id - 1]
+    console.log(params.id - 1)
 
     if (localStorage.getItem("ultimasAsociaciones")) {
         const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones"))
