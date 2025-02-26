@@ -36,26 +36,21 @@ export default function NuevoAsociacion() {
         }));
     };
 
-    const getCsrfToken = async () => {
-        try {
-            const response = await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
-                method: "GET",
-                credentials: "include" // Necesario para enviar cookies de sesión
-            });
-            if (!response.ok) {
-                throw new Error("No se pudo obtener el token CSRF");
+    const getCsrfToken = () => {
+        const cookies = document.cookie.split("; ");
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split("=");
+            if (name === "XSRF-TOKEN") {
+                return decodeURIComponent(value);
             }
-            return response.headers.get("XSRF-TOKEN"); // Obtén el token CSRF de las cabeceras de la respuesta
-        } catch (error) {
-            console.error("Error obteniendo CSRF Token:", error);
-            throw error;
         }
+        return null;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const csrfToken = await getCsrfToken();
+            const csrfToken = getCsrfToken();
             const formDataAso = new FormData();
             for (const key in formData) {
                 formDataAso.append(key, formData[key]);
