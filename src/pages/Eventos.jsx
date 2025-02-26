@@ -80,7 +80,7 @@ export default function Eventos() {
         <div className="mt-20">
             {ultimosEventos}
             <div className="w-screen flex justify-center">
-                <input type="text" placeholder="buscar" className="bg-amber-400 py-1 text-center border-2 rounded-2xl w-96 border-amber-800" value={searchAso.get('filter') || ""} onChange={handleChange} />
+                <input type="text" placeholder="buscar" className="bg-amber-400 py-1 text-center border-2 rounded-2xl w-96 border-amber-800" value={searchEventos.get('filter') || ""} onChange={handleChange} />
             </div>
             <h1 className="text-center text-5xl">Todos los eventos</h1>
             <div className="grid grid-cols-3 gap-2 mt-5">
