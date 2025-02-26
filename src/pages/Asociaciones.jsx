@@ -2,7 +2,7 @@
 import Loading from "../components/Loading"
 import Error from "../components/Error"
 import CarruselAso from "../components/CarruselAso"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { AsociationContext } from "../utils/Context"
 import { useContext, useEffect, useState } from "react"
 
@@ -10,6 +10,7 @@ export default function Asociaciones() {
 
     const { asociaciones, setAsociationes } = useContext(AsociationContext)
     const [asociacionesLocal, setAsociacionesLocal] = useState([])
+    const [searchAso, setSearchAso] = useSearchParams()
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,6 +19,11 @@ export default function Asociaciones() {
     // useEffect(() => {
     //     if (data) setAsociationes(data)
     // })
+
+
+    const handleChange = (e) => {
+        setSearchAso({filter:e.target.value})
+    }
 
     useEffect(() => {
         const asociacionesGuardadas = JSON.parse(localStorage.getItem("ultimasAsociaciones")) || []
@@ -77,6 +83,9 @@ export default function Asociaciones() {
 
     return (
         <div className="mt-20">
+            <div>
+                <input type="text" value={searchAso.get('filter') || ""} onChange={handleChange}/>
+            </div>
             {ultimasAsociaciones}
             <h1 className="text-center text-5xl">Todas las asociaciones</h1>
             <div className="flex flex-wrap justify-center mt-6">
