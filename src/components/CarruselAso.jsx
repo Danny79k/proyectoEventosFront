@@ -27,7 +27,7 @@ export default function CarruselAso({ asociacionesLocal }) {
                     <SwiperSlide key={aso.id} className="flex justify-center">
                         <div className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
-                                <img className="w-full h-48 object-cover" src={aso.main_image} alt={aso.name}
+                                <img className="w-full h-48 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${aso.main_image}`} alt={aso.name}
                                 />
                                 <div className="p-5">
                                     <h2 className="text-2xl font-bold">{aso.name}</h2>
