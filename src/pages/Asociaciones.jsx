@@ -76,8 +76,9 @@ export default function Asociaciones() {
     console.log(asociaciones.data)
 
     const asociacionesData = asociaciones.data
+    const filtered = searchAso.get('filter')
     
-    const asociacionesFiltradas = asociacionesData.filter((aso) => aso.name.toLowerCase().includes(searchAso.get('filter').toLowerCase()))
+    const asociacionesFiltradas = asociacionesData.filter((aso) => aso.name.toLowerCase().includes(filtered.toLowerCase()))
 
     let ultimasAsociaciones = ""
 
