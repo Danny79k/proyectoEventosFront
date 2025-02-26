@@ -72,7 +72,7 @@ export default function Eventos() {
             {ultimosEventos}
             <h1 className="text-center text-5xl">Todos los eventos</h1>
             <div className="grid grid-cols-3 gap-2 mt-5">
-                {eventos.map(evento => {
+                {eventos.data.map(evento => {
                     return (
                         <Link className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id} to={`/evento/${evento.id}`}>
                             <img className="w-full h-48 object-cover" src={evento.main_image} alt={"name"} />
