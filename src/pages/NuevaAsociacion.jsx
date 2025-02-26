@@ -102,7 +102,7 @@ export default function NuevoAsociacion() {
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Formulario</h2>
-            <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+            <form onSubmit={handleSubmit} className="space-y-4" enctype="multipart/form-data">
                 {/* Nombre */}
                 <div>
                     <label className="block font-semibold">Nombre:</label>
