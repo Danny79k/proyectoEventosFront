@@ -83,11 +83,6 @@ export default function NuevoAsociacion() {
                 throw new Error('No autorizado o error en la solicitud');
             }
     
-            const data = await response.json();
-            console.log(data);
-            // setUser(data);
-            // setLoading(false);
-    
             Swal.fire({
                 title: "Asociación creada",
                 icon: "success",
@@ -95,7 +90,6 @@ export default function NuevoAsociacion() {
             });
         } catch (error) {
             console.error('Error:', error);
-            // setLoading(false);
             Swal.fire({
                 title: "Error al crear la asociación",
                 text: error.message,
