@@ -20,7 +20,7 @@ export default function Eventos() {
     }, [])
 
     const handleChange = (e) => {
-        setSearchEventos({filter:e.target.value})
+        setSearchEventos({ filter: e.target.value })
     }
 
     useEffect(() => {
@@ -59,16 +59,16 @@ export default function Eventos() {
             });
     }, []); // El efecto se ejecutará solo una vez al montar el componente
 
-    console.log(eventos);
-    const eventosData = eventos.data
-    const filtered = searchEventos.get('filter') || ''
-
-    const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
 
 
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
 
+    console.log(eventos);
+    const eventosData = eventos.data
+    const filtered = searchEventos.get('filter') || ''
+
+    const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
 
     let ultimosEventos = ""
 
