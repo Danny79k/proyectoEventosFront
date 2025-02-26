@@ -14,6 +14,7 @@ export default function Asociaciones() {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    
     // const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
 
     // useEffect(() => {

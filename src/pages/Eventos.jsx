@@ -12,11 +12,16 @@ export default function Eventos() {
     const [eventosLocal, setEventosLocal] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchEventos, setSearchEventos] = useSearchParams()
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
         setEventosLocal(eventosGuardados)
     }, [])
+
+    const handleChange = (e) => {
+        setSearchEventos({filter:e.target.value})
+    }
 
     useEffect(() => {
         // 1. Obtener el CSRF Token
@@ -54,6 +59,10 @@ export default function Eventos() {
             });
     }, []); // El efecto se ejecutará solo una vez al montar el componente
 
+    const eventosData = eventos.data
+    const filtered = searchEventos.get('filter') || ''
+
+    const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
 
 
     if (loading) return (<div className="mt-20"><Loading /></div>)
@@ -70,9 +79,12 @@ export default function Eventos() {
     return (
         <div className="mt-20">
             {ultimosEventos}
+            <div className="w-screen flex justify-center">
+                <input type="text" placeholder="buscar" className="bg-amber-400 py-1 text-center border-2 rounded-2xl w-96 border-amber-800" value={searchAso.get('filter') || ""} onChange={handleChange} />
+            </div>
             <h1 className="text-center text-5xl">Todos los eventos</h1>
             <div className="grid grid-cols-3 gap-2 mt-5">
-                {eventos.data.map(evento => {
+                {eventosFiltrados.map(evento => {
                     return (
                         <Link className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id} to={`/evento/${evento.id}`}>
                             <img className="w-full h-48 object-cover" src={evento.main_image} alt={"name"} />
