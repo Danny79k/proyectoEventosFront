@@ -1,4 +1,4 @@
-import useFetch from "../components/useFetch"
+// import useFetch from "../components/useFetch"
 import Loading from "../components/Loading"
 import Error from "../components/Error"
 import CarruselEvent from "../components/CarruselEvent"
@@ -8,56 +8,58 @@ import { Link } from "react-router-dom"
 
 export default function Eventos() {
 
-    const { eventos ,setEventos } = useContext(EventContext)
+    const { eventos, setEventos } = useContext(EventContext)
     const [eventosLocal, setEventosLocal] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-            // 1. Obtener el CSRF Token
-            fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
-                method: 'GET',
-                credentials: 'include', // Necesario para enviar cookies de sesión
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('No se pudo obtener el token CSRF');
-                    }
-                    // 2. Hacer la solicitud a la API después de obtener el CSRF Token
-                    return fetch('https://jeffrey.informaticamajada.es/api/events', {
-                        method: 'GET',
-                        credentials: 'include', // Importante para incluir las cookies de sesión
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('No autorizado o error en la solicitud');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setEventos(data); // Almacenar los datos obtenidos
-                    setLoading(false); // Cambiar estado de carga a false
-                })
-                .catch(error => {
-                    setError('Error al obtener asociaciones: ' + error.message);
-                    setLoading(false); // Finalizar carga con error
-                    console.log(error.message);
-                });
-        }, []); // El efecto se ejecutará solo una vez al montar el componente
-
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
         setEventosLocal(eventosGuardados)
     }, [])
 
+    useEffect(() => {
+        // 1. Obtener el CSRF Token
+        fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+            method: 'GET',
+            credentials: 'include', // Necesario para enviar cookies de sesión
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener el token CSRF');
+                }
+                // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+                return fetch('https://jeffrey.informaticamajada.es/api/events', {
+                    method: 'GET',
+                    credentials: 'include', // Importante para incluir las cookies de sesión
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No autorizado o error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setEventos(data); // Almacenar los datos obtenidos
+                setLoading(false); // Cambiar estado de carga a false
+            })
+            .catch(error => {
+                setError('Error al obtener eventos: ' + error.message);
+                setLoading(false); // Finalizar carga con error
+                console.log(error.message);
+            });
+    }, []); // El efecto se ejecutará solo una vez al montar el componente
+
+
+
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
 
+    console.log(eventos);
 
     let ultimosEventos = ""
 
