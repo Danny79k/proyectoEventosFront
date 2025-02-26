@@ -73,7 +73,7 @@ export default function Asociaciones() {
 
     if (loading) return (<div className="mt-20"><Loading/></div>)
     if (error) return (<div className="mt-20"><Error/></div>);
-    console.log(asociaciones.data)
+    console.log(asociaciones.data.data)
     
     const asociacionesFiltradas = asociaciones.data.filter((aso) => aso.name.toLowerCase().includes(searchAso.get('filter').toLowerCase()))
 
