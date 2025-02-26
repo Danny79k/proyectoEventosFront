@@ -8,14 +8,47 @@ import { Link } from "react-router-dom"
 
 export default function Eventos() {
 
-    const { setEventos } = useContext(EventContext)
+    const { eventos ,setEventos } = useContext(EventContext)
     const [eventosLocal, setEventosLocal] = useState([])
-    const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/events")
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (data) setEventos(data)
-    })
+            // 1. Obtener el CSRF Token
+            fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+                method: 'GET',
+                credentials: 'include', // Necesario para enviar cookies de sesión
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('No se pudo obtener el token CSRF');
+                    }
+                    // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+                    return fetch('https://jeffrey.informaticamajada.es/api/events', {
+                        method: 'GET',
+                        credentials: 'include', // Importante para incluir las cookies de sesión
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('No autorizado o error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setEventos(data); // Almacenar los datos obtenidos
+                    setLoading(false); // Cambiar estado de carga a false
+                })
+                .catch(error => {
+                    setError('Error al obtener asociaciones: ' + error.message);
+                    setLoading(false); // Finalizar carga con error
+                    console.log(error.message);
+                });
+        }, []); // El efecto se ejecutará solo una vez al montar el componente
+
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
@@ -24,14 +57,14 @@ export default function Eventos() {
 
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
-    const eventos = data.data
+
 
     let ultimosEventos = ""
 
     if (!eventosLocal.length == 0) {
         ultimosEventos = <CarruselEvent eventosLocal={eventosLocal}></CarruselEvent>
     }
-    console.log(data.data);
+
     return (
         <div className="mt-20">
             {ultimosEventos}
