@@ -36,31 +36,39 @@ export default function NuevoAsociacion() {
         }));
     };
 
-    const getCsrfToken = async () => {
-        try {
-            const response = await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
-                method: "GET",
-                credentials: "include" // Necesario para enviar cookies de sesión
-            });
-            if (!response.ok) {
-                throw new Error("No se pudo obtener el token CSRF");
+    const getCsrfTokenFromCookies = () => {
+        const cookies = document.cookie.split("; ");
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split("=");
+            if (name === "XSRF-TOKEN") {
+                return decodeURIComponent(value);
             }
-            return response.headers.get("XSRF-TOKEN"); // Obtén el token CSRF de las cabeceras de la respuesta
-        } catch (error) {
-            console.error("Error obteniendo CSRF Token:", error);
-            throw error;
         }
+        return null;
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const csrfToken = await getCsrfToken();
+            await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
+                method: "GET",
+                credentials: "include" // Necesario para enviar cookies de sesión
+            });
+    
+            const csrfToken = getCsrfTokenFromCookies();
+            if (!csrfToken) {
+                throw new Error("No se pudo obtener el token XSRF");
+            }
+    
             const formDataAso = new FormData();
             for (const key in formData) {
                 formDataAso.append(key, formData[key]);
             }
 
+            for (let pair of formDataAso.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+    
             const response = await fetch('https://jeffrey.informaticamajada.es/api/associations', {
                 method: 'POST',
                 credentials: 'include',
@@ -70,16 +78,16 @@ export default function NuevoAsociacion() {
                 },
                 body: formDataAso,
             });
-
+    
             if (!response.ok) {
                 throw new Error('No autorizado o error en la solicitud');
             }
-
+    
             const data = await response.json();
             console.log(data);
             // setUser(data);
             // setLoading(false);
-
+    
             Swal.fire({
                 title: "Asociación creada",
                 icon: "success",
@@ -95,14 +103,15 @@ export default function NuevoAsociacion() {
                 draggable: true
             });
         }
-
+    
     };
+    
 
 
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
             <h2 className="text-2xl font-bold mb-4">Formulario</h2>
-            <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+            <form onSubmit={handleSubmit} className="space-y-4" enctype="multipart/form-data">
                 {/* Nombre */}
                 <div>
                     <label className="block font-semibold">Nombre:</label>
