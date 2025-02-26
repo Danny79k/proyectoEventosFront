@@ -38,51 +38,66 @@ export default function NuevoAsociacion() {
 
     const getCsrfToken = async () => {
         try {
-            await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
+            const response = await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
                 method: "GET",
-                credentials: "include" // 👈 Importante para incluir cookies en la solicitud
+                credentials: "include" // Necesario para enviar cookies de sesión
             });
-            console.log("CSRF Token obtenido");
+            if (!response.ok) {
+                throw new Error("No se pudo obtener el token CSRF");
+            }
+            return response.headers.get("XSRF-TOKEN"); // Obtén el token CSRF de las cabeceras de la respuesta
         } catch (error) {
             console.error("Error obteniendo CSRF Token:", error);
+            throw error;
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await getCsrfToken()
-        const formDataAso = new FormData()
-        for (const key in formData) {
-            formDataAso.append(key, formData[key]);
-        }
-        fetch('https://jeffrey.informaticamajada.es/api/associations', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "Accept": "application/json",
-            },
-            body: formDataAso,
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // setUser(data);
-                // setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // setLoading(false);
+        try {
+            const csrfToken = await getCsrfToken();
+            const formDataAso = new FormData();
+            for (const key in formData) {
+                formDataAso.append(key, formData[key]);
+            }
+
+            const response = await fetch('https://jeffrey.informaticamajada.es/api/associations', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    "Accept": "application/json",
+                    "X-XSRF-TOKEN": csrfToken // Incluye el token XSRF en las cabeceras
+                },
+                body: formDataAso,
             });
 
-        for (let pair of formDataAso.entries()) {
-            console.log(pair[0], pair[1]);
+            if (!response.ok) {
+                throw new Error('No autorizado o error en la solicitud');
+            }
+
+            const data = await response.json();
+            console.log(data);
+            // setUser(data);
+            // setLoading(false);
+
+            Swal.fire({
+                title: "Asociación creada",
+                icon: "success",
+                draggable: true
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            // setLoading(false);
+            Swal.fire({
+                title: "Error al crear la asociación",
+                text: error.message,
+                icon: "error",
+                draggable: true
+            });
         }
-        Swal.fire({
-            title: "Asociación creada",
-            icon: "success",
-            draggable: true
-        });
+
     };
+
 
     return (
         <div className="max-w-lg mx-auto p-6 rounded-lg shadow-lg mt-20">
