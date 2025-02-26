@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
-import { LightContext } from "../utils/Context";
+import { TypeContext, LightContext } from "../utils/Context";
 import Swal from "sweetalert2";
 import '../css/NuevoEventoCss.css'
 
 export default function NuevoEvento() {
 
     const { light } = useContext(LightContext)
+    const [preview, setPreview] = useState(null);
+    const { types } = useContext(TypeContext)
 
     const [formData, setFormData] = useState({
         title: "",
@@ -14,18 +16,17 @@ export default function NuevoEvento() {
         description: "",
         accessType: "all",
         eventType: "",
+        main_image: "",
     });
 
-    const eventTypes = [
-        "Conferencia",
-        "Concierto",
-        "Exposición",
-        "Taller",
-        "Deportivo",
-        "Festival",
-    ];
 
-
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPreview(URL.createObjectURL(file));
+            setFormData({ ...formData, main_image: file });
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -106,32 +107,56 @@ export default function NuevoEvento() {
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-lg ${(!light) ? "bg-amber-50" : "bg-gray-900"}`}
                     >
-                        <option value="publico">Público</option>
-                        <option value="anticipado">Anticipado</option>
-                        <option value="exclusivo">Exclusivo</option>
+                        <option value="all">Público</option>
+                        <option value="anticipated">Anticipado</option>
+                        <option value="exclusive">Exclusivo</option>
                     </select>
                 </div>
 
                 {/* Tipo de evento */}
                 <div>
-                    <label className="block font-semibold">Tipo de evento:</label>
+                    <label className="block font-semibold">Tipo:</label>
                     <select
-                        name="eventType"
-                        value={formData.eventType}
+                        name="type_id"
+                        value={formData.type_id}
                         onChange={handleChange}
-                        className={`w-full p-2 border rounded-lg ${(!light) ? "bg-amber-50" : "bg-gray-900"}`}
+                        className="w-full p-2 border rounded-lg"
+                        required
                     >
                         <option value="">Selecciona un tipo</option>
-                        {eventTypes.map((type) => (
-                            <option key={type} value={type}>
-                                {type}
+                        {types.data.map(type => (
+                            <option key={type.id} value={type.id}>
+                                {type.type}
                             </option>
                         ))}
                     </select>
                 </div>
-                <div>
-                    <label className="block font-semibold">Imagen</label>
+                <div className="flex flex-col items-center space-y-3 p-4 shadow-md rounded-lg border-1">
+                    <label className="font-semibold ">Imagen Principal*</label>
 
+                    {preview && (
+                        <img
+                            src={preview}
+                            alt="Vista previa"
+                            className="w-100 h-50 object-cover rounded-lg border"
+                        />
+                    )}
+
+                    <input
+                        type="file"
+                        name="main_image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                        id="fileInput"
+                    />
+
+                    <label
+                        htmlFor="fileInput"
+                        className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                    >
+                        📤 Subir Imagen
+                    </label>
                 </div>
 
                 {/* Botón de enviar */}
