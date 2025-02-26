@@ -36,7 +36,7 @@ export default function NuevoAsociacion() {
         }));
     };
 
-    const getCsrfToken = () => {
+    const getCsrfTokenFromCookies = () => {
         const cookies = document.cookie.split("; ");
         for (const cookie of cookies) {
             const [name, value] = cookie.split("=");
@@ -46,16 +46,29 @@ export default function NuevoAsociacion() {
         }
         return null;
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const csrfToken = getCsrfToken();
+            await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
+                method: "GET",
+                credentials: "include" // Necesario para enviar cookies de sesión
+            });
+    
+            const csrfToken = getCsrfTokenFromCookies();
+            if (!csrfToken) {
+                throw new Error("No se pudo obtener el token XSRF");
+            }
+    
             const formDataAso = new FormData();
             for (const key in formData) {
                 formDataAso.append(key, formData[key]);
             }
 
+            for (let pair of formDataAso.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+    
             const response = await fetch('https://jeffrey.informaticamajada.es/api/associations', {
                 method: 'POST',
                 credentials: 'include',
@@ -65,16 +78,16 @@ export default function NuevoAsociacion() {
                 },
                 body: formDataAso,
             });
-
+    
             if (!response.ok) {
                 throw new Error('No autorizado o error en la solicitud');
             }
-
+    
             const data = await response.json();
             console.log(data);
             // setUser(data);
             // setLoading(false);
-
+    
             Swal.fire({
                 title: "Asociación creada",
                 icon: "success",
@@ -90,8 +103,9 @@ export default function NuevoAsociacion() {
                 draggable: true
             });
         }
-
+    
     };
+    
 
 
     return (
