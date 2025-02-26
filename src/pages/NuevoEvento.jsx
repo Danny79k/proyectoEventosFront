@@ -12,7 +12,7 @@ export default function NuevoEvento() {
         date_start: "",
         date_end: "",
         description: "",
-        accessType: "publico",
+        accessType: "all",
         eventType: "",
     });
 

@@ -10,6 +10,7 @@ import MisAsociaciones from './pages/MisAsociaciones';
 import Eventos from './pages/Eventos';
 import Evento from './pages/Evento';
 import NuevoEvento from './pages/NuevoEvento';
+import MisEventos from './pages/MisEventos';
 import NotFound from './pages/NotFound';
 import useFetch from './components/useFetch';
 import Loading from './components/Loading';
@@ -77,6 +78,7 @@ function App() {
                     <Route element={<Asociacion />} path='/asociacion/:id'></Route>
                     <Route element={<NuevoAsociacion />} path='/nueva-asociacion'></Route>
                     <Route element={<Eventos />} path='/eventos'></Route>
+                    <Route element={<MisEventos />} path='/mis-eventos'></Route>
                     <Route element={<Evento />} path='/evento/:id'></Route>
                     <Route element={<NuevoEvento />} path='/nuevo-evento'></Route>
                     <Route element={<CalendarComponent/>} path='/calendario'></Route>
