@@ -25,6 +25,8 @@ export default function Asociaciones() {
         setSearchAso({filter:e.target.value})
     }
 
+    console.log(searchAso.get('filter'))
+
     useEffect(() => {
         const asociacionesGuardadas = JSON.parse(localStorage.getItem("ultimasAsociaciones")) || []
         setAsociacionesLocal(asociacionesGuardadas)
@@ -72,7 +74,7 @@ export default function Asociaciones() {
     if (loading) return (<div className="mt-20"><Loading/></div>)
     if (error) return (<div className="mt-20"><Error/></div>);
     
-
+    const asociacionesFiltradas = asociaciones.filter((aso) => aso.name.toLowerCase().includes(searchAso.get('filter').toLowerCase()))
     console.log(asociaciones)
 
     let ultimasAsociaciones = ""
@@ -83,13 +85,13 @@ export default function Asociaciones() {
 
     return (
         <div className="mt-20">
-            <div>
-                <input type="text" value={searchAso.get('filter') || ""} onChange={handleChange}/>
-            </div>
             {ultimasAsociaciones}
+            <div className="w-screen flex justify-center">
+                <input type="text" placeholder="buscar" className="bg-amber-400 py-1 text-center border-2 rounded-2xl w-96 border-amber-800" value={searchAso.get('filter') || ""} onChange={handleChange}/>
+            </div>
             <h1 className="text-center text-5xl">Todas las asociaciones</h1>
             <div className="flex flex-wrap justify-center mt-6">
-                {asociaciones.data.map(aso => {
+                {asociacionesFiltradas.map(aso => {
                     return (
                         <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                             <Link to={`/asociacion/${aso.id}`}>
