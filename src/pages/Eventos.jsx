@@ -4,7 +4,7 @@ import Error from "../components/Error"
 import CarruselEvent from "../components/CarruselEvent"
 import { EventContext } from "../utils/Context"
 import { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 export default function Eventos() {
 
