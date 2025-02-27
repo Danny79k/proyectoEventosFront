@@ -23,6 +23,9 @@ import { UserContextProvider } from './provider/UserContextProvider';
 function App() {
 
   const [light, setLight] = useState(localStorage.getItem("theme") === "true");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
 
   return (
     <>
@@ -49,7 +52,7 @@ function App() {
               </AssociationContextProvider>
             </EventContextProvider>
           </TypeContextProvider>
-        </UserContextProvider >
+        </UserContextProvider>
       </LightContext.Provider>
     </>
   )
