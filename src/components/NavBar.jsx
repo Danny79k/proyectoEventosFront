@@ -7,7 +7,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 
 export default function NavBar() {
     const { light, setLight } = useContext(LightContext)
-    const { User } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenNav, setIsOpenNav] = useState(false);
     const [navBg, setNavBg] = useState("bg-transparent");
@@ -43,7 +43,7 @@ export default function NavBar() {
                         className="lg:hidden p-2 rounded-md focus:outline-none flex text-gray-400 items-center"
                         onClick={() => setIsOpen(!isOpen)}
                     >
-                        {User ? <span className="font-semibold text-2xl">{(User.name).toUpperCase()}</span> : ""}
+                        {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                         {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
                     </button>
 
@@ -80,7 +80,7 @@ export default function NavBar() {
                             }}
                             className="flex text-gray-400 items-center"
                         >
-                            {User ? <span className="font-semibold text-2xl">{(User.name).toUpperCase()}</span> : ""}
+                            {user ? <span className="font-semibold text-2xl">{(user.name).toUpperCase()}</span> : ""}
                             {isOpenNav ? <X size={30} /> : <Menu size={30} />}
                         </button>
                     </div>
@@ -100,7 +100,7 @@ export default function NavBar() {
                                 {(item) ? item : "Inicio"}
                             </NavLink>
                         ))}
-                        {User ?
+                        {user ?
                             <>
                                 <NavLink to={"/mis-asociaciones"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Asociaciones</NavLink>
                                 <NavLink to={"/mis-eventos"} className="w-full text-center py-3 text-lg font-semibold hover:bg-gray-700">Mis Eventos</NavLink>
@@ -136,7 +136,7 @@ export default function NavBar() {
             </nav>
             <div className={`transition-all duration-300 ${isOpenNav ? "block" : "hidden"} ${navBg} fixed right-100 top-20 z-20`}>
                 <div className={`grid grid-cols-4  p-4 space-y-4 ${navBg}`}>
-                    {(User == null) ?
+                    {(user == null) ?
                         <>
                             <NavLink to={"https://jeffrey.informaticamajada.es/login"} className=" hover:text-yellow-5000 col-end-1" onClick={() => setIsOpen(false)}>Login</NavLink>
                             <NavLink to={"https://jeffrey.informaticamajada.es/register"} className=" hover:text-yellow-500 col-end-1" onClick={() => setIsOpen(false)}>Sign in</NavLink>
