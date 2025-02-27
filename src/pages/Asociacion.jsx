@@ -1,50 +1,50 @@
-import { useParams, Link } from "react-router-dom"
-import { AsociationContext } from "../utils/Context"
-import { useContext, useEffect, useState } from "react"
-import Loading from "../components/Loading"
-
+import { useParams, Link } from "react-router-dom";
+import { AsociationContext } from "../utils/Context";
+import { useContext, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 export default function Asociacion() {
-
-    const { data, loading, error } = useContext(AsociationContext)
-    const [asoc, setAsoc] = useState([])
-    const params = useParams()
+    const { data, loading, error } = useContext(AsociationContext);
+    const [asoc, setAsoc] = useState([]);
+    const params = useParams();
 
     useEffect(() => {
-        if (data?.data) setAsoc(data.data)
-    }, [data])
+        if (data?.data) setAsoc(data.data);
+    }, [data]);
 
-    if (loading) return (<Loading />)
-    if (error) return (<div>Error...</div>)
+    if (loading) return <Loading />;
+    if (error) return <div>Error...</div>;
 
-    const asociacion = asoc.find(a => a.id == params.id);
+    // Convertir params.id a número y buscar en el array
+    const id = Number(params.id);
+    const asociacion = asoc.find(a => a.id === id);
 
-    if (localStorage.getItem("ultimasAsociaciones")) {
-        const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones"))
-        console.log(asociacionesLocal)
-        if (!asociacionesLocal.some(aso => aso.id == asociacion.id)) {
-            const nuevasAsociaciones = [...asociacionesLocal, asociacion]
-            localStorage.setItem("ultimasAsociaciones", JSON.stringify(nuevasAsociaciones))
-        }
-    } else {
-        console.log(asociacion);
-        const nuevaAsociacion = [asociacion]
-        localStorage.setItem("ultimasAsociaciones", JSON.stringify(nuevaAsociacion))
+    if (!asociacion) {
+        return <div className="mt-20 text-center">No se encontró la asociación</div>;
     }
 
+    // Guardar en localStorage asegurando que no sea null
+    const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones") || "[]");
+
+    if (!asociacionesLocal.some(aso => aso.id === asociacion.id)) {
+        const nuevasAsociaciones = [...asociacionesLocal, asociacion];
+        localStorage.setItem("ultimasAsociaciones", JSON.stringify(nuevasAsociaciones));
+    }
 
     return (
         <div className="mt-20">
-            <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/asociaciones"}> ◄◄ Volver ◄◄ </Link>
+            <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/asociaciones"}>
+                ◄◄ Volver ◄◄
+            </Link>
             <div className="px-5 mt-5">
-                <div >
-                    <img className="w-full h-150 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`} alt={"name"} />
+                <div>
+                    <img className="w-full h-150 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`} alt={asociacion.name} />
                     <div className="p-5">
-                        <h2 className="text-2xl font-bold ">{asociacion.name}</h2>
-                        <p className="mt-2 ">{asociacion.description}</p>
+                        <h2 className="text-2xl font-bold">{asociacion.name}</h2>
+                        <p className="mt-2">{asociacion.description}</p>
                     </div>
                 </div>
-                <div className="mt-4 border-t p-4 text-center  dark:border-gray-600">
+                <div className="mt-4 border-t p-4 text-center dark:border-gray-600">
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                         📧 <a href={`mailto:${asociacion.email}`} className="text-blue-500 hover:underline">{asociacion.email}</a>
                     </p>
@@ -54,5 +54,5 @@ export default function Asociacion() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
