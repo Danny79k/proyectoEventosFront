@@ -14,8 +14,7 @@ export default function Eventos() {
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
     const [searchEventos, setSearchEventos] = useSearchParams()
-    console.log(data.data)
-
+    
     useEffect(() => {
         if (data?.data) setEventos(data.data);
     }, [data]);
