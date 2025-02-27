@@ -44,7 +44,7 @@ function App() {
         console.error('Error:', error);
         setLoading(false);
       });
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []);
 
   return (
     <>
