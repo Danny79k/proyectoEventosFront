@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../utils/Context"
 import Swal from "sweetalert2"
 import Loading from "../components/Loading"
+import ComentariosEventos from "../components/ComentariosEventos"
 
 export default function Evento() {
 
@@ -108,6 +109,7 @@ export default function Evento() {
             + Unirse al evento
         </div>
     </div>
+    <ComentariosEventos params={params.id}></ComentariosEventos>
 </div>
 
 

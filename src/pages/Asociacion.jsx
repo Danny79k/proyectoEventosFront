@@ -65,7 +65,7 @@ export default function Asociacion() {
                 </div>
             </div>
         </div>
-        <ComentariosAsociacion />
+        <ComentariosAsociacion params={params.id} />
     </div>
     );
 }
