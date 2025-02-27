@@ -18,6 +18,7 @@ export default function Asociacion() {
     if (error) return (<div>Error...</div>)
 
     const asociacion = asoc[params.id - 1]
+    console.log(asociacion)
 
     if (localStorage.getItem("ultimasAsociaciones")) {
         const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones"))
