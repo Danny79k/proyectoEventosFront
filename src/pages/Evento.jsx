@@ -1,15 +1,30 @@
 import { useParams, Link } from "react-router-dom"
 import { EventContext } from "../utils/Context"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../utils/Context"
 import Swal from "sweetalert2"
+import Loading from "../components/Loading"
 
 export default function Evento() {
 
     const { user } = useContext(UserContext)
-    const { eventos } = useContext(EventContext)
+    const { data, loading, error } = useContext(EventContext)
     const params = useParams()
-    const evento = eventos.data[params.id - 1]
+    const [event, setEvent] = useState([])
+
+    useEffect(() => {
+        if (data?.data) setEvent(data.data)
+    },[data])
+
+    if (loading) return(<Loading/>)
+    if (error) return(<div>Error...</div>)
+    
+    const id = Number(params.id)
+    const evento = event.find(e => e.id === id)
+
+    if (!evento) {
+        return <div className="mt-20 text-center">No se encontró la asociación</div>;
+    }
 
     if (localStorage.getItem("ultimosEventos")) {
         const eventosLocal = JSON.parse(localStorage.getItem("ultimosEventos"))

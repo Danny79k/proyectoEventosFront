@@ -8,7 +8,6 @@ import Error from "../components/Error"
 export default function MisAsociaciones() {
 
     const { user } = useContext(UserContext)
-    const { asociaciones, setAsociaciones } = useContext(AsociationContext)
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/user/${user.id}/associations`)
 
     if (loading) return (<div className="mt-20"><Loading /></div>)
