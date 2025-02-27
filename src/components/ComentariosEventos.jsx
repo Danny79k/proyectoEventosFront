@@ -96,6 +96,7 @@ export default function ComentariosEventos({ params }) {
                         <div className="space-y-3">
                             {events.map((comment, index) => (
                                 <div key={index} className="bg-gray-100 p-3 rounded-lg shadow">
+                                    <p className="text-sm text-gray-700">Puntuación: {comment.score}</p>
                                     <p className="text-sm text-gray-700">{comment.text}</p>
                                     {/* <p className="text-xs text-gray-500 mt-1">🗓 {comment.date}</p> */}
                                 </div>
