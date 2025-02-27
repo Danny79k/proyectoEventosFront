@@ -1,15 +1,31 @@
 import useFetch from "./useFetch";
 import Loading from "./Loading";
 import Error from "./Error";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../utils/Context";
 
 
-export default function ComentariosEventos({params}) {
+export default function ComentariosEventos({ params }) {
 
     const [comment, setComment] = useState("");
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(0);
+    const { user } = useContext(UserContext)
+
+    const [formData, setFormData] = useState({
+        score: "",
+        text: "",
+        user_id: user.id || "",
+        commentable_type: "App\\Models\\Event",  
+        commentable_id: params,
+    });
+
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/events/${params}/comments`)
+    
     if (loading) return (<div className="mt-5"> <Loading /></div>)
     if (error) return (<div className="mt-5"> <Error /></div>)
+
+
 
     console.log(data);
 
@@ -22,7 +38,7 @@ export default function ComentariosEventos({params}) {
             <div>
 
             </div>
-            <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-4">
+            <div className=" mx-auto bg-white shadow-lg rounded-lg p-4 mt-10">
                 <h2 className="text-lg font-semibold mb-2">Deja tu comentario</h2>
                 <form onSubmit={handleSubmit} className="space-y-3">
                     <textarea

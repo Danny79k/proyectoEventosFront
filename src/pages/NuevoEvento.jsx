@@ -9,14 +9,6 @@ export default function NuevoEvento() {
     const [preview, setPreview] = useState(null);
     const { data, loading, error } = useContext(TypeContext)
     const [types, setTypes] = useState([])
-
-    useEffect(() => {
-        if (data?.data) setTypes(data.data)
-    }, [data])
-
-    if (loading) return (<div>Loading...</div>)
-    if (error) return (<div>error...</div>)
-
     const [formData, setFormData] = useState({
         title: "",
         date_start: "",
@@ -26,6 +18,14 @@ export default function NuevoEvento() {
         eventType: "",
         main_image: "",
     });
+
+    useEffect(() => {
+        if (data?.data) setTypes(data.data)
+    }, [data])
+
+    if (loading) return (<div>Loading...</div>)
+    if (error) return (<div>error...</div>)
+
 
 
     const handleImageChange = (e) => {
