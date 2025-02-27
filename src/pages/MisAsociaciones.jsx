@@ -18,9 +18,9 @@ export default function MisAsociaciones() {
     return (
         <div className="mt-20">
             <div>
-                <h1>Todas mis asociaciones</h1>
-                <div className="flex flex-warp">
-                    <div className="bg-green-400 text-7xl rounded-3xl border-2 justify-self-center">
+                <h1 className="text-6xl text-center">Todas mis asociaciones</h1>
+                <div className="flex flex-warp items-center">
+                    <div className="bg-green-500 text-white text-4xl rounded-full border-2 border-green-600 w-16 h-16 flex justify-center items-center shadow-lg hover:bg-green-600 transition">
                         <Link to={'/nueva-asociacion'}>+</Link>
                     </div>
                     {data.data.map(aso => {
@@ -47,7 +47,7 @@ export default function MisAsociaciones() {
                 </div>
             </div>
             <div>
-                <h1>Asociaciones miembro</h1>
+                <h1 className="text-6xl text-center">Asociaciones miembro</h1>
             </div>
         </div>
     )
