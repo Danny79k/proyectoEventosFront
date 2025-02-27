@@ -14,7 +14,7 @@ export default function Eventos() {
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
     const [searchEventos, setSearchEventos] = useSearchParams()
-    console.log('data:'+data)
+    console.log('data: '+ data.data)
 
     useEffect(() => {
         if (data) setEventos(data.data)
@@ -70,7 +70,7 @@ export default function Eventos() {
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
 
-    console.log('solo eventos'+eventos);
+    console.log('solo eventos: '+ eventos);
     const eventosData = eventos.data
     const filtered = searchEventos.get('filter') || ''
 
