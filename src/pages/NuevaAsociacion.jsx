@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { TypeContext, AsociationContext, UserContext, TypeContext } from "../utils/Context";
+import { UserContext, TypeContext } from "../utils/Context";
 
 
 export default function NuevoAsociacion() {
     const { user } = useContext(UserContext)
     const [preview, setPreview] = useState(null);
-    const { data, loading, error } = useContext(EventContext)
+    const { data, loading, error } = useContext(TypeContext)
     const [types, setTypes] = useState([])
 
     useEffect(() => {
