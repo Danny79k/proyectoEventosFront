@@ -33,26 +33,37 @@ export default function Asociacion() {
 
     return (
         <div className="mt-20">
-            <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/asociaciones"}>
-                ◄◄ Volver ◄◄
-            </Link>
-            <div className="px-5 mt-5">
-                <div>
-                    <img className="w-full h-150 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`} alt={asociacion.name} />
-                    <div className="p-5">
-                        <h2 className="text-2xl font-bold">{asociacion.name}</h2>
-                        <p className="mt-2">{asociacion.description}</p>
-                    </div>
-                </div>
-                <div className="mt-4 border-t p-4 text-center dark:border-gray-600">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        📧 <a href={`mailto:${asociacion.email}`} className="text-blue-500 hover:underline">{asociacion.email}</a>
+        <Link
+            className="rounded-2xl text-3xl bg-green-400 p-1 mb-4 text-white hover:bg-green-500 transition"
+            to={"/asociaciones"}
+        >
+            ◄◄ Volver ◄◄
+        </Link>
+
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+                className="w-full h-72 object-cover"
+                src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`}
+                alt={asociacion.name}
+            />
+            <div className="p-6">
+                <h2 className="text-3xl font-semibold text-gray-800">{asociacion.name}</h2>
+                <p className="mt-3 text-gray-600">{asociacion.description}</p>
+            </div>
+
+            <div className="mt-4 p-6 bg-gray-100 text-center rounded-b-lg">
+                <div className="flex justify-center items-center space-x-4">
+                    <p className="text-sm text-gray-600">
+                        <span className="font-semibold">📧</span> 
+                        <a href={`mailto:${asociacion.email}`} className="text-blue-500 hover:underline">{asociacion.email}</a>
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        📞 <a href={`tel:${asociacion.telephone}`} className="text-blue-500 hover:underline">{asociacion.telephone}</a>
+                    <p className="text-sm text-gray-600">
+                        <span className="font-semibold">📞</span> 
+                        <a href={`tel:${asociacion.telephone}`} className="text-blue-500 hover:underline">{asociacion.telephone}</a>
                     </p>
                 </div>
             </div>
         </div>
+    </div>
     );
 }
