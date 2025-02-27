@@ -1,14 +1,19 @@
 import { useParams, Link } from "react-router-dom"
 import { AsociationContext } from "../utils/Context"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 
 
 export default function Asociacion() {
 
-    const { asociaciones } = useContext(AsociationContext)
+    const { data, loading ,error } = useContext(AsociationContext)
+    const [aso, setAso] = useState([])
     const params = useParams()
-    const asociacion = asociaciones.data[params.id - 1]
-    console.log(params.id - 1)
+
+    useEffect(() => {
+        if (data?.data) setAso(data.data)
+    },[data])
+
+    const asociacion = aso[params.id - 1]
 
     if (localStorage.getItem("ultimasAsociaciones")) {
         const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones"))
