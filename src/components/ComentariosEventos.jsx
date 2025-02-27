@@ -16,7 +16,7 @@ export default function ComentariosEventos({ params }) {
         score: "",
         text: "",
         user_id: user.id || "",
-        commentable_type: "App\\Models\\Event",  
+        commentable_type: "event",  
         commentable_id: params,
     });
 

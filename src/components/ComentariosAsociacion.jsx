@@ -16,7 +16,7 @@ export default function ComentariosAsociacion({ params }) {
         score: "",
         text: "",
         user_id: user?.id || "",
-        commentable_type: "App\\Models\\Association",
+        commentable_type: "association",
         commentable_id: params,
     });
 
