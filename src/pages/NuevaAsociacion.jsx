@@ -1,13 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { TypeContext, AsociationContext, UserContext } from "../utils/Context";
+import { TypeContext, AsociationContext, UserContext, TypeContext } from "../utils/Context";
 
 
 export default function NuevoAsociacion() {
-    const { asociaciones, setAsociaciones } = useContext(AsociationContext)
     const { user } = useContext(UserContext)
-    const { types } = useContext(TypeContext)
     const [preview, setPreview] = useState(null);
+    const { data, loading, error } = useContext(EventContext)
+    const [types, setTypes] = useState([])
+
+    useEffect(() => {
+        if (data?.data) setTypes(data.data)
+    }, [data])
+
+    if (loading) return (<div>Loading...</div>)
+    if (error) return (<div>error...</div>)
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -46,7 +53,7 @@ export default function NuevoAsociacion() {
         }
         return null;
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -54,12 +61,12 @@ export default function NuevoAsociacion() {
                 method: "GET",
                 credentials: "include" // Necesario para enviar cookies de sesión
             });
-    
+
             const csrfToken = getCsrfTokenFromCookies();
             if (!csrfToken) {
                 throw new Error("No se pudo obtener el token XSRF");
             }
-    
+
             const formDataAso = new FormData();
             for (const key in formData) {
                 formDataAso.append(key, formData[key]);
@@ -68,7 +75,7 @@ export default function NuevoAsociacion() {
             for (let pair of formDataAso.entries()) {
                 console.log(pair[0], pair[1]);
             }
-    
+
             const response = await fetch('https://jeffrey.informaticamajada.es/api/associations', {
                 method: 'POST',
                 credentials: 'include',
@@ -78,11 +85,11 @@ export default function NuevoAsociacion() {
                 },
                 body: formDataAso,
             });
-    
+
             if (!response.ok) {
                 throw new Error('No autorizado o error en la solicitud');
             }
-    
+
             Swal.fire({
                 title: "Asociación creada",
                 icon: "success",
@@ -97,9 +104,9 @@ export default function NuevoAsociacion() {
                 draggable: true
             });
         }
-    
+
     };
-    
+
 
 
     return (
@@ -171,7 +178,7 @@ export default function NuevoAsociacion() {
                         required
                     >
                         <option value="">Selecciona un tipo</option>
-                        {types.data.map(type => (
+                        {types.map(type => (
                             <option key={type.id} value={type.id}>
                                 {type.type}
                             </option>
