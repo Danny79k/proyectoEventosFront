@@ -8,6 +8,17 @@ export default function NuevoAsociacion() {
     const [preview, setPreview] = useState(null);
     const { data, loading, error } = useContext(TypeContext)
     const [types, setTypes] = useState([])
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        max_members: "",
+        telephone: "",
+        email: "",
+        main_image: "",
+        type_id: "",
+        user_id: user.id,
+        maxMembersEnabled: "",
+    })
 
     useEffect(() => {
         if (data?.data) setTypes(data.data)
@@ -23,17 +34,6 @@ export default function NuevoAsociacion() {
             setFormData({ ...formData, main_image: file });
         }
     };
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        max_members: "",
-        telephone: "",
-        email: "",
-        main_image: "",
-        type_id: "",
-        user_id: user.id,
-        maxMembersEnabled: "",
-    })
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
