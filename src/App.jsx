@@ -49,7 +49,7 @@ function App() {
               </AssociationContextProvider>
             </EventContextProvider>
           </TypeContextProvider>
-        </UserContextProvider>
+        </UserContextProvider >
       </LightContext.Provider>
     </>
   )
