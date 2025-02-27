@@ -1,36 +1,48 @@
-import { useCallback, useEffect, useState } from "react";
-const cache = {}
+import { useState, useEffect } from "react";
 
-
-export default function useFetch(url) {
-    const [data, setData] = useState(cache[url] || null)
-    const [loading, setLoading] = useState(!cache[url])
-    const [error, setError] = useState(null)
-
-    const fetchData = useCallback(async () => {
-        if(cache[url]) return
-        setLoading(true)
-        try {
-            const res = await fetch(url)
-            if (res.ok) {
-                const data = await res.json()
-                cache[url] = data
-                setData(data)
-            } else {
-                throw Error("Error al aceder a la API")
-            }
-        } catch (error) {
-            console.log(error)
-            setData([])
-            setError(error.message)
-        } finally {
-            setLoading(false)
-        }
-    },[url])
+const useFetch = (url: string) => {
+    const [data, setData] = useState < any > (null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState < string | null > (null);
 
     useEffect(() => {
-        fetchData()
-    },[fetchData])
+        let isMounted = true;
 
-    return { data, loading, error }
-}
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+                // Asegurar la cookie CSRF antes de cualquier llamada
+                await fetch("/sanctum/csrf-cookie", { credentials: "include" });
+
+                const response = await fetch(url, { credentials: "include" });
+
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                if (isMounted) {
+                    setData(result);
+                    setLoading(false);
+                }
+            } catch (err: any) {
+                if (isMounted) {
+                    setError(err.message);
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [url]); // Se vuelve a ejecutar cuando cambia la URL
+
+    return { data, loading, error };
+};
+
+export default useFetch;

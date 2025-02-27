@@ -17,6 +17,7 @@ import Loading from './components/Loading';
 import CalendarComponent from './components/Calendar';
 import { LightContext, EventContext, AsociationContext, TypeContext, UserContext } from './utils/Context'
 import './App.css';
+import { EventContextProvider } from './provider/EventContextProvider';
 
 
 function App() {
@@ -100,7 +101,7 @@ function App() {
       <LightContext.Provider value={{ light, setLight }}>
         <UserContext.Provider value={{ user, setUser }}>
           <TypeContext.Provider value={{ types, setTypes }}>
-            <EventContext.Provider value={{ eventos, setEventos }}>
+            <EventContextProvider>
               <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
                 <Routes>
                   <Route path='/' element={<Layout />}>
@@ -119,7 +120,7 @@ function App() {
                   </Route>
                 </Routes>
               </AsociationContext.Provider>
-            </EventContext.Provider>
+            </EventContextProvider>
           </TypeContext.Provider>
         </UserContext.Provider>
       </LightContext.Provider>
