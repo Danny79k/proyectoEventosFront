@@ -10,15 +10,10 @@ export default function Eventos() {
 
     const { data, loading, error } = useContext(EventContext)
     const [eventosLocal, setEventosLocal] = useState([])
-    const [eventos, setEventos] = useState();
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
     const [searchEventos, setSearchEventos] = useSearchParams()
-    console.log(data)
-
-    useEffect(() => {
-        if (data) setEventos(data.data)
-    }, [data])
+    console.log(data.data)
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
@@ -70,8 +65,7 @@ export default function Eventos() {
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
 
-    console.log('solo eventos: '+ eventos);
-    const eventosData = eventos.data
+    const eventosData = data.data
     const filtered = searchEventos.get('filter') || ''
 
     const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
