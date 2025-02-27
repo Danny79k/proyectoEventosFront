@@ -69,32 +69,46 @@ export default function Evento() {
 
     return (
         <div className="mt-20">
-            <div className="flex justify-center">
-                <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/eventos"}> ◄◄ Volver ◄◄ </Link>
-            </div>
-            <div className="px-5 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 mt-5" key={evento.id}>
-                <img className="w-full h-150 object-cover" src={evento.main_image} alt={"name"} />
-                <div className="p-5">
-                    <h2 className="text-2xl font-bold ">{evento.title}</h2>
-                    <p className="mt-2 ">{evento.description}</p>
-                    <div className="mt-4 border-t pt-4 dark:border-gray-600">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                            <span>tipo event:</span>{evento.access_type}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                            <span>fecha evento: </span>{evento.date_start.slice(0, 10)}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div className="flex justify-center cursor-pointer">
-                <div
-                    onClick={handleSubmit}
-                    className="rounded-2xl w-1/2  bg-green-300 text-5xl font-bold text-center mt-5  hover:bg-white hover:text-green-500 hover:border-green-500 hover:border-1"
-                >
-                    + Unirse al evento
-                </div>
+    <div className="flex justify-center mb-6">
+        <Link
+            className="rounded-2xl text-3xl bg-green-400 p-1 mb-4 hover:bg-green-500 hover:text-white transition-colors duration-300"
+            to={"/eventos"}
+        >
+            ◄◄ Volver ◄◄
+        </Link>
+    </div>
+
+    <div className="px-5 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 mt-5">
+        <img
+            className="w-full h-60 object-cover rounded-t-2xl transition-all duration-300 group-hover:opacity-80"
+            src={evento.main_image}
+            alt={evento.title}
+        />
+        <div className="p-5">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-3 group-hover:text-green-500 transition-all duration-300">
+                {evento.title}
+            </h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">{evento.description}</p>
+            <div className="mt-4 border-t pt-4 dark:border-gray-600">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Tipo de evento:</span> {evento.access_type}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Fecha del evento:</span> {evento.date_start.slice(0, 10)}
+                </p>
             </div>
         </div>
+    </div>
+
+    <div className="flex justify-center mt-6">
+        <div
+            onClick={handleSubmit}
+            className="rounded-2xl w-2/3 py-3 text-2xl font-bold text-center bg-green-300 hover:bg-green-500 hover:text-white hover:border-green-500 hover:border-2 transition-all duration-300 cursor-pointer"
+        >
+            + Unirse al evento
+        </div>
+    </div>
+</div>
+
     )
 }

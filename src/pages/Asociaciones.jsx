@@ -93,35 +93,49 @@ export default function Asociaciones() {
     }
 
     return (
-        <div className="mt-20">
-            {ultimasAsociaciones}
-            <div className="w-screen flex justify-center">
-                <input type="text" placeholder="buscar" className="bg-amber-400 py-1 text-center border-2 rounded-2xl w-96 border-amber-800" value={searchAso.get('filter') || ""} onChange={handleChange}/>
-            </div>
-            <h1 className="text-center text-5xl">Todas las asociaciones</h1>
-            <div className="flex flex-wrap justify-center mt-6">
-                {asociacionesFiltradas.map(aso => {
-                    return (
-                        <div key={aso.id} className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                            <Link to={`/asociacion/${aso.id}`}>
-                                <img className="w-full h-48 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${aso.main_image}`} alt={"name"} />
-                                <div className="p-5">
-                                    <h2 className="text-2xl font-bold ">{aso.name}</h2>
-                                    <p className="mt-2 ">{aso.description}</p>
-                                </div>
-                            </Link>
-                            <div className="mt-4 border-t p-4 text-center  dark:border-gray-600">
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    📧 <a href={`mailto:${aso.email}`} className="text-blue-500 hover:underline">{aso.email}</a>
-                                </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    📞 <a href={`tel:${aso.telephone}`} className="text-blue-500 hover:underline">{aso.telephone}</a>
-                                </p>
-                            </div>
+<div className="mt-20">
+    {ultimasAsociaciones}
+    <div className="w-screen flex justify-center mb-6">
+        <input
+            type="text"
+            placeholder="Buscar asociación..."
+            className="bg-amber-400 py-2 text-center border-2 rounded-2xl w-96 border-amber-800 text-lg"
+            value={searchAso.get('filter') || ""}
+            onChange={handleChange}
+        />
+    </div>
+    <h1 className="text-center text-5xl font-semibold mb-5">Todas las asociaciones</h1>
+    <div className="flex flex-wrap justify-center mt-6 gap-6">
+        {asociacionesFiltradas.map(aso => {
+            return (
+                <div
+                    key={aso.id}
+                    className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300"
+                >
+                    <Link to={`/asociacion/${aso.id}`} className="block">
+                        <img
+                            className="w-full h-56 object-cover rounded-t-2xl"
+                            src={`https://jeffrey.informaticamajada.es/storage/${aso.main_image}`}
+                            alt={aso.name}
+                        />
+                        <div className="p-5">
+                            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">{aso.name}</h2>
+                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{aso.description}</p>
                         </div>
-                    )
-                })}
-            </div>
-        </div>
+                    </Link>
+                    <div className="mt-4 border-t p-4 text-center dark:border-gray-600">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            📧 <a href={`mailto:${aso.email}`} className="text-blue-500 hover:underline">{aso.email}</a>
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            📞 <a href={`tel:${aso.telephone}`} className="text-blue-500 hover:underline">{aso.telephone}</a>
+                        </p>
+                    </div>
+                </div>
+            );
+        })}
+    </div>
+</div>
+
     )
 }
