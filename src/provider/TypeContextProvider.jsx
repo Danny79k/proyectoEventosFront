@@ -1,6 +1,6 @@
 import React from 'react'
 import useFetch from '../components/useFetch'
-import { EventContext, TypeContext } from '../utils/Context'
+import { TypeContext } from '../utils/Context'
 
 export const TypeContextProvider = ({ children }) => {
 

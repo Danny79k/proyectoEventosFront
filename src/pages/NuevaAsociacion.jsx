@@ -4,7 +4,7 @@ import { UserContext, TypeContext } from "../utils/Context";
 
 
 export default function NuevoAsociacion() {
-    const { user } = useContext(UserContext)
+    const { User } = useContext(UserContext)
     const [preview, setPreview] = useState(null);
     const { data, loading, error } = useContext(TypeContext)
     const [types, setTypes] = useState([])
@@ -16,7 +16,7 @@ export default function NuevoAsociacion() {
         email: "",
         main_image: "",
         type_id: "",
-        user_id: user.id,
+        user_id: User.id,
         maxMembersEnabled: "",
     })
 

@@ -17,39 +17,17 @@ import './App.css';
 import { EventContextProvider } from './provider/EventContextProvider';
 import { AssociationContextProvider } from './provider/AssociationContextProvider';
 import { TypeContextProvider } from './provider/TypeContextProvider';
+import { UserContextProvider } from './provider/UserContextProvider';
 
 
 function App() {
 
   const [light, setLight] = useState(localStorage.getItem("theme") === "true");
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() => {
-    fetch('https://jeffrey.informaticamajada.es/auth/user', {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setUser(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setLoading(false);
-      });
-  }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
     <>
       <LightContext.Provider value={{ light, setLight }}>
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContextProvider>
           <TypeContextProvider>
             <EventContextProvider>
               <AssociationContextProvider>
@@ -71,7 +49,7 @@ function App() {
               </AssociationContextProvider>
             </EventContextProvider>
           </TypeContextProvider>
-        </UserContext.Provider>
+        </UserContextProvider>
       </LightContext.Provider>
     </>
   )
