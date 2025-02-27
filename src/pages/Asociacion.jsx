@@ -1,40 +1,44 @@
 import { useParams, Link } from "react-router-dom"
 import { AsociationContext } from "../utils/Context"
 import { useContext, useEffect, useState } from "react"
+import Loading from "../components/Loading"
 
 
 export default function Asociacion() {
 
-    const { data, loading ,error } = useContext(AsociationContext)
-    const [aso, setAso] = useState([])
+    const { data, loading, error } = useContext(AsociationContext)
+    const [asoc, setAsoc] = useState([])
     const params = useParams()
 
     useEffect(() => {
-        if (data?.data) setAso(data.data)
-    },[data])
+        if (data?.data) setAsoc(data.data)
+    }, [data])
 
-    const asociacion = aso[params.id - 1]
+    if (loading) return (<Loading />)
+    if (error) return (<div>Error...</div>)
+
+    const asociacion = asoc[params.id - 1]
 
     if (localStorage.getItem("ultimasAsociaciones")) {
         const asociacionesLocal = JSON.parse(localStorage.getItem("ultimasAsociaciones"))
         console.log(asociacionesLocal)
-        if(!asociacionesLocal.some(aso => aso.id == asociacion.id)){
+        if (!asociacionesLocal.some(aso => aso.id == asociacion.id)) {
             const nuevasAsociaciones = [...asociacionesLocal, asociacion]
             localStorage.setItem("ultimasAsociaciones", JSON.stringify(nuevasAsociaciones))
         }
-    }else{
+    } else {
         console.log(asociacion);
         const nuevaAsociacion = [asociacion]
         localStorage.setItem("ultimasAsociaciones", JSON.stringify(nuevaAsociacion))
     }
 
-    
+
     return (
         <div className="mt-20">
             <Link className="rounded-2xl text-3xl bg-green-400 p-1 mb-4" to={"/asociaciones"}> ◄◄ Volver ◄◄ </Link>
             <div className="px-5 mt-5">
                 <div >
-                    <img className="w-full h-150 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`}  alt={"name"} />
+                    <img className="w-full h-150 object-cover" src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`} alt={"name"} />
                     <div className="p-5">
                         <h2 className="text-2xl font-bold ">{asociacion.name}</h2>
                         <p className="mt-2 ">{asociacion.description}</p>
