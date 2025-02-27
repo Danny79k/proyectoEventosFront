@@ -44,7 +44,7 @@ export default function Asociacion() {
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <img
                 className="w-full h-48 object-cover"
-                src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`}
+                src={(asociacion.main_image) ? `https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjk57_dSSq3YibwbmuS_Pb7zArnEfQEJ9cHw&s"}
                 alt={asociacion.name}
             />
             <div className="p-5">

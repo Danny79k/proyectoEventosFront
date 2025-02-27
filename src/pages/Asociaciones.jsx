@@ -118,7 +118,7 @@ export default function Asociaciones() {
                             >
                                 <img
                                     className="w-full h-56 object-cover rounded-t-2xl transition-all duration-300 group-hover:scale-105"
-                                    src={`https://jeffrey.informaticamajada.es/storage/${aso.main_image}`}
+                                    src={(aso.main_image) ? `https://jeffrey.informaticamajada.es/storage/${aso.main_image}`: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjk57_dSSq3YibwbmuS_Pb7zArnEfQEJ9cHw&s"}
                                     alt={aso.name}
                                 />
                                 <div className="p-5">

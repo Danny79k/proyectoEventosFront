@@ -26,7 +26,7 @@ export default function CarruselAso({ eventosLocal }) {
                 {eventosLocal.map(evento => (
                     <SwiperSlide key={evento.id} className="flex justify-center">
                         <Link className="max-w-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700" key={evento.id} to={`/evento/${evento.id}`}>
-                            <img className="w-full h-48 object-cover" src={evento.main_image} alt={"name"} />
+                            <img className="w-full h-48 object-cover" src={(evento.main_image)? `https://jeffrey.informaticamajada.es/storage/${event.main_image}` :"https://eldoce.es/wp-content/uploads/2017/10/doce-estrategia-digital-difusion-de-un-evento-1-1000x668.jpg"} alt={"name"} />
                             <div className="p-5">
                                 <h2 className="text-2xl font-bold ">{evento.title}</h2>
                                 <p className="mt-2 ">{evento.description}</p>

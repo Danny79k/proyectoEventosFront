@@ -82,7 +82,7 @@ export default function Evento() {
     <div className="px-5 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 mt-5 hover:shadow-2xl transition-shadow duration-300 ease-in-out">
         <img
             className="w-full h-48 object-cover rounded-t-2xl transition-all duration-300 group-hover:opacity-80"
-            src={evento.main_image}
+            src={(evento.main_image)? `https://jeffrey.informaticamajada.es/storage/${event.main_image}` :"https://eldoce.es/wp-content/uploads/2017/10/doce-estrategia-digital-difusion-de-un-evento-1-1000x668.jpg"}
             alt={evento.title}
         />
         <div className="p-4">

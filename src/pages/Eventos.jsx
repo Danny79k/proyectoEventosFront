@@ -65,7 +65,7 @@ export default function Eventos() {
                         >
                             <img 
                                 className="w-full h-48 object-cover group-hover:opacity-80 transition-all"
-                                src={evento.main_image}
+                                src={(evento.main_image)? `https://jeffrey.informaticamajada.es/storage/${event.main_image}` :"https://eldoce.es/wp-content/uploads/2017/10/doce-estrategia-digital-difusion-de-un-evento-1-1000x668.jpg"}
                                 alt={evento.title}
                             />
                             <div className="p-5">
