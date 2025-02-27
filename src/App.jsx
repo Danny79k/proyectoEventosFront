@@ -58,7 +58,6 @@ function App() {
               <AssociationContextProvider>
                 <Routes>
                   <Route path='/' element={<Layout />}>
-                    <Route element={<Login />} path='/login'></Route>
                     <Route element={<Index />} path='/'></Route>
                     <Route element={<Asociaciones />} path='/asociaciones'></Route>
                     <Route element={<MisAsociaciones />} path='/mis-asociaciones'></Route>
