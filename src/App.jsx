@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './layouts/layout';
 import Index from './pages';
-import Login from './pages/Login';
 import Asociaciones from './pages/Asociaciones';
 import Asociacion from './pages/Asociacion';
 import NuevoAsociacion from './pages/NuevaAsociacion';
@@ -12,10 +11,8 @@ import Evento from './pages/Evento';
 import NuevoEvento from './pages/NuevoEvento';
 import MisEventos from './pages/MisEventos';
 import NotFound from './pages/NotFound';
-// import useFetch from './components/useFetch';
-import Loading from './components/Loading';
 import CalendarComponent from './components/Calendar';
-import { LightContext, EventContext, AsociationContext, TypeContext, UserContext } from './utils/Context'
+import { LightContext, UserContext } from './utils/Context'
 import './App.css';
 import { EventContextProvider } from './provider/EventContextProvider';
 import { AssociationContextProvider } from './provider/AssociationContextProvider';
