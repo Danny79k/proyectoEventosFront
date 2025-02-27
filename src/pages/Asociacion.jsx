@@ -32,7 +32,7 @@ export default function Asociacion() {
     }
 
     return (
-        <div className="mt-20">
+        <div className="mt-20 max-w-2xl mx-auto">
         <Link
             className="rounded-2xl text-3xl bg-green-400 p-1 mb-4 text-white hover:bg-green-500 transition"
             to={"/asociaciones"}
@@ -42,16 +42,16 @@ export default function Asociacion() {
 
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <img
-                className="w-full h-72 object-cover"
+                className="w-full h-48 object-cover"
                 src={`https://jeffrey.informaticamajada.es/storage/${asociacion.main_image}`}
                 alt={asociacion.name}
             />
-            <div className="p-6">
-                <h2 className="text-3xl font-semibold text-gray-800">{asociacion.name}</h2>
-                <p className="mt-3 text-gray-600">{asociacion.description}</p>
+            <div className="p-5">
+                <h2 className="text-2xl font-semibold text-gray-800">{asociacion.name}</h2>
+                <p className="mt-2 text-gray-600">{asociacion.description}</p>
             </div>
 
-            <div className="mt-4 p-6 bg-gray-100 text-center rounded-b-lg">
+            <div className="mt-4 p-5 bg-gray-100 text-center rounded-b-lg">
                 <div className="flex justify-center items-center space-x-4">
                     <p className="text-sm text-gray-600">
                         <span className="font-semibold">📧</span> 
