@@ -8,7 +8,7 @@ export const UserContextProvider = ({ children }) => {
     if (data?.data) setUser(data.data)
     if (loading) return (<div>Loading...</div>)
     if (error) return (<div>Error...</div>)
-    console.log(UserId)
+
     return (
         <UserContext.Provider value={User}>
             {children}
