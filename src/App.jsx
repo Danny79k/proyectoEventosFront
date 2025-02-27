@@ -18,6 +18,7 @@ import CalendarComponent from './components/Calendar';
 import { LightContext, EventContext, AsociationContext, TypeContext, UserContext } from './utils/Context'
 import './App.css';
 import { EventContextProvider } from './provider/EventContextProvider';
+import { AssociationContextProvider } from './provider/AssociationContextProvider';
 
 
 function App() {
@@ -102,7 +103,7 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
           <TypeContext.Provider value={{ types, setTypes }}>
             <EventContextProvider>
-              <AsociationContext.Provider value={{ asociaciones, setAsociationes }}>
+              <AssociationContextProvider>
                 <Routes>
                   <Route path='/' element={<Layout />}>
                     <Route element={<Login />} path='/login'></Route>
@@ -119,7 +120,7 @@ function App() {
                     <Route element={<NotFound />} path='/*'></Route>
                   </Route>
                 </Routes>
-              </AsociationContext.Provider>
+              </AssociationContextProvider>
             </EventContextProvider>
           </TypeContext.Provider>
         </UserContext.Provider>

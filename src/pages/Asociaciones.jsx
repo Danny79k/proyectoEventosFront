@@ -8,13 +8,18 @@ import { useContext, useEffect, useState } from "react"
 
 export default function Asociaciones() {
 
-    const { asociaciones, setAsociationes } = useContext(AsociationContext)
+    const { data, loading, error } = useContext(AsociationContext)
     const [asociacionesLocal, setAsociacionesLocal] = useState([])
     const [searchAso, setSearchAso] = useSearchParams()
+    const [asociaciones, setAsociaciones] = useState([])
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    
+    useEffect(() => {
+        if (data?.data) setAsociaciones(data.data)
+    }, [data])
+
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
+
     // const { data, loading, error } = useFetch("https://jeffrey.informaticamajada.es/api/associations")
 
     // useEffect(() => {
@@ -36,50 +41,50 @@ export default function Asociaciones() {
     // if (loading) return (<div className="mt-20"><Loading /></div>)
     // if (error) return (<div className="mt-20"><Error /></div>)
 
-    useEffect(() => {
-        // 1. Obtener el CSRF Token
-        fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
-            method: 'GET',
-            credentials: 'include', // Necesario para enviar cookies de sesión
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('No se pudo obtener el token CSRF');
-                }
-                // 2. Hacer la solicitud a la API después de obtener el CSRF Token
-                return fetch('https://jeffrey.informaticamajada.es/api/associations', {
-                    method: 'GET',
-                    credentials: 'include', // Importante para incluir las cookies de sesión
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('No autorizado o error en la solicitud');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setAsociationes(data); // Almacenar los datos obtenidos
-                setLoading(false); // Cambiar estado de carga a false
-            })
-            .catch(error => {
-                setError('Error al obtener asociaciones: ' + error.message);
-                setLoading(false); // Finalizar carga con error
-                console.log(error.message);
-            });
-    }, []); // El efecto se ejecutará solo una vez al montar el componente
+    // useEffect(() => {
+    //     // 1. Obtener el CSRF Token
+    //     fetch('https://jeffrey.informaticamajada.es/sanctum/csrf-cookie', {
+    //         method: 'GET',
+    //         credentials: 'include', // Necesario para enviar cookies de sesión
+    //     })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('No se pudo obtener el token CSRF');
+    //             }
+    //             // 2. Hacer la solicitud a la API después de obtener el CSRF Token
+    //             return fetch('https://jeffrey.informaticamajada.es/api/associations', {
+    //                 method: 'GET',
+    //                 credentials: 'include', // Importante para incluir las cookies de sesión
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //             });
+    //         })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('No autorizado o error en la solicitud');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setAsociationes(data); // Almacenar los datos obtenidos
+    //             setLoading(false); // Cambiar estado de carga a false
+    //         })
+    //         .catch(error => {
+    //             setError('Error al obtener asociaciones: ' + error.message);
+    //             setLoading(false); // Finalizar carga con error
+    //             console.log(error.message);
+    //         });
+    // }, []); // El efecto se ejecutará solo una vez al montar el componente
+
+    const filtered = searchAso.get('filter') || ''
+    
+    const asociacionesFiltradas = asociaciones.filter((aso) => aso.name.toLowerCase().includes(filtered.toLowerCase()))
+
 
     if (loading) return (<div className="mt-20"><Loading/></div>)
     if (error) return (<div className="mt-20"><Error/></div>);
-    console.log(asociaciones.data)
 
-    const asociacionesData = asociaciones.data
-    const filtered = searchAso.get('filter') || ''
-    
-    const asociacionesFiltradas = asociacionesData.filter((aso) => aso.name.toLowerCase().includes(filtered.toLowerCase()))
 
     let ultimasAsociaciones = ""
 
