@@ -51,7 +51,7 @@ export default function ComentariosEventos({ params }) {
                 throw new Error("No se pudo obtener el token XSRF");
             }
 
-            const response = await fetch(`https://jeffrey.informaticamajada.es/api/association/${params}/comments`, {
+            const response = await fetch(`https://jeffrey.informaticamajada.es/api/event/${params}/comments`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
