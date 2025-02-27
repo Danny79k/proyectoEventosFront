@@ -17,8 +17,9 @@ export default function Eventos() {
     console.log(data.data)
 
     useEffect(() => {
-        if (data) setEventos(data.data)
-    },[data])
+        if (data?.data) setEventos(data.data);
+    }, [data]);
+    
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
@@ -70,7 +71,8 @@ export default function Eventos() {
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
     console.log(eventos)
-    const eventosData = eventos
+    const eventosData = eventos || [];
+
     const filtered = searchEventos.get('filter') || ''
 
     const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
