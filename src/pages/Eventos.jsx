@@ -19,7 +19,7 @@ export default function Eventos() {
     useEffect(() => {
         if (data?.data) setEventos(data.data);
     }, [data]);
-    
+
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
@@ -66,16 +66,14 @@ export default function Eventos() {
     //         });
     // }, []); // El efecto se ejecutará solo una vez al montar el componente
 
+    console.log(eventos)
 
+    const eventosData = eventos || [];
+    const filtered = searchEventos.get('filter') || ''
+    const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
 
     if (loading) return (<div className="mt-20"><Loading /></div>)
     if (error) return (<div className="mt-20"><Error /></div>)
-    console.log(eventos)
-    const eventosData = eventos || [];
-
-    const filtered = searchEventos.get('filter') || ''
-
-    const eventosFiltrados = eventosData.filter((eve) => eve.title.toLowerCase().includes(filtered.toLowerCase()))
 
     let ultimosEventos = ""
 
