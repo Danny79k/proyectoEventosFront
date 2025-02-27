@@ -11,11 +11,6 @@ export default function ComentariosAsociacion({ params }) {
     // const [rating, setRating] = useState(0);
     // const [hover, setHover] = useState(0);
     const { user } = useContext(UserContext)
-    const [commentAso , setCommentAso] = useState({
-        score: "",
-        text: "",
-        user_id: user?.id || "",
-    })
 
     const [formData, setFormData] = useState({
         score: "",
@@ -24,12 +19,7 @@ export default function ComentariosAsociacion({ params }) {
         commentable_type: "association",
         commentable_id: params,
     });
-    useEffect(()=>{
-        setCommentAso({
-            score: formData.score,
-            text: formData.text
-        })
-    },[formData])
+
 
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/association/${params}/comments`)
     if (loading) return (<div className="mt-5"> <Loading /></div>)
@@ -70,28 +60,12 @@ export default function ComentariosAsociacion({ params }) {
                     "Content-Type": "application/json",
                     "X-XSRF-TOKEN": csrfToken // Incluye el token XSRF en las cabeceras
                 },
-                body: JSON.stringify(commentAso),
+                body: JSON.stringify(formData),
             });
 
             if (!response.ok) {
                 throw new Error('No autorizado o error en la solicitud');
             }
-
-            const responseAso = await fetch('https://jeffrey.informaticamajada.es/api/comments', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "X-XSRF-TOKEN": csrfToken // Incluye el token XSRF en las cabeceras
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!responseAso.ok) {
-                throw new Error('No autorizado o error en la solicitud');
-            }
-
 
             Swal.fire({
                 title: "Mensaje enviado",
