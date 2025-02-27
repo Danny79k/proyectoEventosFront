@@ -24,11 +24,11 @@ export default function NuevoAsociacion() {
         if (data?.data) setTypes(data.data)
     }, [data])
 
-    console.log(types)
-    
+
     if (loading) return (<div>Loading...</div>)
     if (error) return (<div>error...</div>)
 
+    console.log(types)
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
