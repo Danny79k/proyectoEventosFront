@@ -10,7 +10,7 @@ export default function Eventos() {
 
     const { data, loading, error } = useContext(EventContext)
     const [eventosLocal, setEventosLocal] = useState([])
-    const [eventos, setEventos] = useState()
+    const [eventos, setEventos] = useState([])
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
     const [searchEventos, setSearchEventos] = useSearchParams()
