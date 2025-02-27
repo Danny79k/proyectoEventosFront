@@ -18,7 +18,7 @@ export default function Eventos() {
 
     useEffect(() => {
         if (data) setEventos(data.data)
-    })
+    },[data])
 
     useEffect(() => {
         const eventosGuardados = JSON.parse(localStorage.getItem("ultimosEventos")) || []
