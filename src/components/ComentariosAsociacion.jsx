@@ -1,7 +1,7 @@
 import useFetch from "./useFetch";
 import Loading from "./Loading";
 import Error from "./Error";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import { Star } from "lucide-react";
 import { UserContext } from "../utils/Context";
 import Swal from "sweetalert2";
@@ -11,6 +11,11 @@ export default function ComentariosAsociacion({ params }) {
     // const [rating, setRating] = useState(0);
     // const [hover, setHover] = useState(0);
     const { user } = useContext(UserContext)
+    const [commentAso , setCommentAso] = useState({
+        score: "",
+        text: "",
+        user_id: user?.id || "",
+    })
 
     const [formData, setFormData] = useState({
         score: "",
@@ -19,13 +24,19 @@ export default function ComentariosAsociacion({ params }) {
         commentable_type: "association",
         commentable_id: params,
     });
+    useEffect(()=>{
+        setCommentAso({
+            score: formData.score,
+            text: formData.text
+        })
+    },[formData])
 
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/association/${params}/comments`)
     if (loading) return (<div className="mt-5"> <Loading /></div>)
     if (error) return (<div className="mt-5"> <Error /></div>)
 
     const comments = data.data
-
+    console.log(data);
     const getCsrfTokenFromCookies = () => {
         const cookies = document.cookie.split("; ");
         for (const cookie of cookies) {
@@ -51,7 +62,22 @@ export default function ComentariosAsociacion({ params }) {
                 throw new Error("No se pudo obtener el token XSRF");
             }
 
-            const response = await fetch('https://jeffrey.informaticamajada.es/api/comments', {
+            const response = await fetch(`https://jeffrey.informaticamajada.es/api/association/${params}/comments`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": csrfToken // Incluye el token XSRF en las cabeceras
+                },
+                body: JSON.stringify(commentAso),
+            });
+
+            if (!response.ok) {
+                throw new Error('No autorizado o error en la solicitud');
+            }
+
+            const responseAso = await fetch('https://jeffrey.informaticamajada.es/api/comments', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -62,9 +88,10 @@ export default function ComentariosAsociacion({ params }) {
                 body: JSON.stringify(formData),
             });
 
-            if (!response.ok) {
+            if (!responseAso.ok) {
                 throw new Error('No autorizado o error en la solicitud');
             }
+
 
             Swal.fire({
                 title: "Mensaje enviado",
