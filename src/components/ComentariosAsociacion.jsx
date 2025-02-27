@@ -4,9 +4,10 @@ import Error from "./Error";
 import { useState } from "react";
 
 
-export default function ComentariosAsociacion(params) {
+export default function ComentariosAsociacion({params}) {
 
     const [comment, setComment] = useState("");
+    console.log(params);
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/association/${params}/comments`)
     if (loading) return (<div className="mt-5"> <Loading /></div>)
     if (error) return (<div className="mt-5"> <Error /></div>)
@@ -20,7 +21,7 @@ export default function ComentariosAsociacion(params) {
     return (
         <div>
             <div>
-                
+
             </div>
             <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-4">
                 <h2 className="text-lg font-semibold mb-2">Deja tu comentario</h2>

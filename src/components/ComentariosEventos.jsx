@@ -4,7 +4,7 @@ import Error from "./Error";
 import { useState } from "react";
 
 
-export default function ComentariosEventos(params) {
+export default function ComentariosEventos({params}) {
 
     const [comment, setComment] = useState("");
     const { data, loading, error } = useFetch(`https://jeffrey.informaticamajada.es/api/events/${params}/comments`)
