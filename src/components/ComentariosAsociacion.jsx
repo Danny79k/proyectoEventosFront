@@ -39,6 +39,7 @@ export default function ComentariosAsociacion({ params }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(formData);
         try {
             await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", {
                 method: "GET",
@@ -55,6 +56,7 @@ export default function ComentariosAsociacion({ params }) {
                 credentials: 'include',
                 headers: {
                     "Accept": "application/json",
+                    "Content-Type": "application/json",
                     "X-XSRF-TOKEN": csrfToken // Incluye el token XSRF en las cabeceras
                 },
                 body: JSON.stringify(formData),
