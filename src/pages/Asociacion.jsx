@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { AsociationContext } from "../utils/Context";
 import { useContext, useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import ComentariosAsociacion from "../components/ComentariosAsociacion";
 
 export default function Asociacion() {
     const { data, loading, error } = useContext(AsociationContext);
@@ -64,6 +65,7 @@ export default function Asociacion() {
                 </div>
             </div>
         </div>
+        <ComentariosAsociacion />
     </div>
     );
 }
