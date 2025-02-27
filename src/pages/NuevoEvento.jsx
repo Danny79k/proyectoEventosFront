@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TypeContext, LightContext } from "../utils/Context";
 import Swal from "sweetalert2";
 import '../css/NuevoEventoCss.css'
@@ -7,7 +7,15 @@ export default function NuevoEvento() {
 
     const { light } = useContext(LightContext)
     const [preview, setPreview] = useState(null);
-    const { types } = useContext(TypeContext)
+    const { data, loading, error } = useContext(TypeContext)
+    const [types, setTypes] = useState([])
+
+    useEffect(() => {
+        if (data?.data) setTypes(data.data)
+    }, [data])
+
+    if (loading) return (<div>Loading...</div>)
+    if (error) return (<div>error...</div>)
 
     const [formData, setFormData] = useState({
         title: "",
@@ -124,7 +132,7 @@ export default function NuevoEvento() {
                         required
                     >
                         <option value="">Selecciona un tipo</option>
-                        {types.data.map(type => (
+                        {types.map(type => (
                             <option key={type.id} value={type.id}>
                                 {type.type}
                             </option>
