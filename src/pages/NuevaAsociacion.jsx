@@ -16,7 +16,7 @@ export default function NuevoAsociacion() {
         email: "",
         main_image: "",
         type_id: "",
-        user_id: user.id,
+        user_id: user?.id || "",
         maxMembersEnabled: "",
     })
 
