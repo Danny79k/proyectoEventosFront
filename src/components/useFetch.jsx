@@ -14,7 +14,7 @@ const useFetch = (url) => {
                 setError(null);
 
                 // Asegurar la cookie CSRF antes de cualquier llamada
-                await fetch("/sanctum/csrf-cookie", { credentials: "include" });
+                await fetch("https://jeffrey.informaticamajada.es/sanctum/csrf-cookie", { credentials: "include" });
 
                 const response = await fetch(url, { credentials: "include" });
 
